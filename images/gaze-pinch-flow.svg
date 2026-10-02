@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="330" viewBox="0 0 1000 330" role="img" aria-labelledby="title desc">
+<title id="title">From attention to action</title><desc id="desc">Look to target, pinch to confirm, then receive feedback. Attention is not the same as intention.</desc>
+<rect width="1000" height="330" rx="24" fill="#eef4f0"/>
+<g font-family="Arial, sans-serif" fill="#203b32">
+<text x="40" y="49" font-size="15" letter-spacing="2">FROM ATTENTION TO ACTION</text>
+<g fill="#ffffff" stroke="#b5c9bd"><rect x="40" y="80" width="270" height="170" rx="15"/><rect x="365" y="80" width="270" height="170" rx="15"/><rect x="690" y="80" width="270" height="170" rx="15"/></g>
+<text x="64" y="115" font-size="15">01 / TARGET</text><text x="64" y="159" font-size="27" font-weight="bold">Look at an item</text><text x="64" y="200" font-size="17">Which object?</text>
+<text x="390" y="115" font-size="15">02 / CONFIRM</text><text x="390" y="159" font-size="27" font-weight="bold">Tap two fingers</text><text x="390" y="200" font-size="17">Act on it now.</text>
+<text x="715" y="115" font-size="15">03 / FEEDBACK</text><text x="715" y="159" font-size="27" font-weight="bold">See the result</text><text x="715" y="200" font-size="17">Did it do what I meant?</text>
+<text x="325" y="172" font-size="27">→</text><text x="650" y="172" font-size="27">→</text>
+<text x="40" y="294" font-size="19">Looking is attention. Confirming communicates intention.</text></g></svg>
