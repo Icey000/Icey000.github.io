@@ -1,0 +1,55 @@
+HW3 — French in context — blank observation sheet
+Status: No participant session has been recorded.
+
+Date:
+Prototype version / device:
+Participant label (e.g. P1, not their full name):
+French familiarity:
+Experience with translation apps:
+Participant understands this is a simulation and agrees to take part:
+
+Explain: We are testing the design, not you. Please say what you expect
+and what you are trying to do. You may stop at any time.
+
+For each task, record actions before interpretations.
+Outcome options: independent / with help / not completed.
+
+TASK 1: You have reached this library. Find which entrance to use.
+First action:
+Other actions / pauses:
+Answer given:
+Outcome:
+Help provided:
+Participant comment:
+
+TASK 2: Find out when the library opens.
+Actions / answer:
+Outcome / help:
+Comment:
+
+TASK 3: Check an unfamiliar word, then return to the original notice.
+Actions:
+Outcome / help:
+Comment:
+
+TASK 4: Facilitator selects the Unclear text scenario.
+Prompt: The text cannot be read clearly. Show what you would do next.
+Actions:
+Outcome / help:
+Comment:
+
+AFTERWARDS
+What did you expect when selecting a line?
+What was confusing?
+Was the connection between original text and translation clear?
+Would an ordinary translation screen have been enough? Why?
+
+REFLECTION (fill only after the session)
+Observed issue:
+Evidence (action or accurately recorded comment):
+Proposed change:
+Reason the change could help:
+What remains uncertain:
+
+Do not generalise one person's feedback to all users. This test does not
+measure real AR tracking, OCR accuracy, physical comfort or walking safety.

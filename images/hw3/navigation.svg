@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1040" height="590" viewBox="0 0 1040 590" role="img" aria-labelledby="title desc">
+    <title id="title">02 / Address and entrance</title><desc id="desc">Connect a map destination with the doorway in front of you. HCI focus: visible uncertainty; brief cues while stopped; a map alternative.</desc>
+    <style>text{font-family:Arial,sans-serif;fill:#244940}.small{font-size:17px;fill:#536d62}.label{font-size:20px}.heading{font-size:31px;font-weight:bold}.line{fill:none;stroke:#367460;stroke-width:3;stroke-linecap:round}.button{fill:#e7f1e9;stroke:#83a795;stroke-width:1.5}</style>
+    <rect width="1040" height="590" rx="22" fill="#f3f5ed"/>
+    <text x="38" y="56" class="heading">02 / Address and entrance</text><text x="38" y="90" class="small">Connect a map destination with the doorway in front of you</text>
+    <rect x="38" y="122" width="964" height="370" rx="18" fill="#dce5d7"/>
+    
+<path d="M65 445 L230 269 L430 269 L514 445" fill="#c4cfc3" stroke="#879d8a" stroke-width="2"/>
+<rect x="85" y="170" width="178" height="193" fill="#efeee3" stroke="#829b86" stroke-width="2"/>
+<rect x="296" y="160" width="183" height="221" fill="#efeee3" stroke="#829b86" stroke-width="2"/>
+<rect x="344" y="265" width="84" height="116" fill="#b5c6b1" stroke="#25634e" stroke-width="5"/>
+<text x="355" y="250" class="label">No. 12</text>
+<path d="M190 426 L300 365 L359 350 M336 343 L359 350 L350 374" fill="none" stroke="#28694e" stroke-width="9"/>
+<text x="91" y="204" class="small">Street view</text>
+    <path d="M 484 291 L 552 291" class="line" stroke-dasharray="7 7"/>
+    <rect x="554" y="166" width="408" height="278" rx="17" fill="#fffef7" stroke="#a6bfae" stroke-width="2"/>
+    
+<text x="580" y="206" class="small">Next action</text>
+<text x="580" y="254" font-size="25">Entrance on your right</text>
+<text x="580" y="296" class="small">Check the door number: 12.</text>
+<rect x="580" y="326" width="352" height="45" rx="8" fill="#fff0d7"/>
+<text x="594" y="355" class="small">Estimated location — verify visually</text>
+<text x="580" y="414" class="label">Map view  /  End guidance</text>
+    <text x="38" y="530" class="small">HCI focus: visible uncertainty; brief cues while stopped; a map alternative.</text>
+    <text x="38" y="561" class="small">Original concept sketch · illustrative only · HW3 / Mingyu Zhang</text></svg>

@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1040" height="590" viewBox="0 0 1040 590" role="img" aria-labelledby="title desc">
+    <title id="title">01 / French in context</title><desc id="desc">Understand a notice without losing the original text. HCI focus: link the result to its source; give the user control over detail.</desc>
+    <style>text{font-family:Arial,sans-serif;fill:#244940}.small{font-size:17px;fill:#536d62}.label{font-size:20px}.heading{font-size:31px;font-weight:bold}.line{fill:none;stroke:#367460;stroke-width:3;stroke-linecap:round}.button{fill:#e7f1e9;stroke:#83a795;stroke-width:1.5}</style>
+    <rect width="1040" height="590" rx="22" fill="#f3f5ed"/>
+    <text x="38" y="56" class="heading">01 / French in context</text><text x="38" y="90" class="small">Understand a notice without losing the original text</text>
+    <rect x="38" y="122" width="964" height="370" rx="18" fill="#dce5d7"/>
+    
+<rect x="76" y="165" width="410" height="280" fill="#fffdf0" stroke="#829b86" stroke-width="2"/>
+<path d="M76 178 H486" stroke="#376c59" stroke-width="16"/>
+<text x="103" y="220" font-size="26" font-weight="bold">BIBLIOTHÈQUE</text>
+<text x="103" y="265" class="label">Entrée temporairement fermée</text>
+<rect x="93" y="282" width="380" height="48" rx="6" fill="#d9efdf" stroke="#28694e" stroke-width="3"/>
+<text x="103" y="313" class="label">Utilisez la porte à droite</text>
+<text x="103" y="367" class="label">Ouvert de 9 h à 18 h</text>
+<text x="103" y="414" class="small">1. Select a line</text>
+    <path d="M 484 291 L 552 291" class="line" stroke-dasharray="7 7"/>
+    <rect x="554" y="166" width="408" height="278" rx="17" fill="#fffef7" stroke="#a6bfae" stroke-width="2"/>
+    
+<text x="580" y="205" class="small">2. Read the translation</text>
+<text x="580" y="254" font-size="25">Use the door on the right.</text>
+<text x="580" y="295" class="small">Selected French line stays visible.</text>
+<rect x="580" y="333" width="172" height="49" rx="8" class="button"/>
+<text x="597" y="364" class="small">Explain words</text>
+<rect x="769" y="333" width="163" height="49" rx="8" class="button"/>
+<text x="809" y="364" class="small">Close</text>
+<text x="580" y="418" class="small">3. Get details only when needed</text>
+    <text x="38" y="530" class="small">HCI focus: link the result to its source; give the user control over detail.</text>
+    <text x="38" y="561" class="small">Original concept sketch · illustrative only · HW3 / Mingyu Zhang</text></svg>

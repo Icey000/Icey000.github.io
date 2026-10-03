@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="HW3 interactive AR concept simulation. Select French text, compare its translation, and try error recovery.">
+<title>French in context · HW3 prototype</title>
+<style>
+:root{font-family:Inter,Segoe UI,Arial,sans-serif;color:#203e3b;background:#f3f4ed;font-synthesis:none}*{box-sizing:border-box}body{margin:0}a{color:#255e55;text-underline-offset:4px}header,main,footer{max-width:1160px;margin:auto;padding:24px}header{display:flex;justify-content:space-between;gap:16px;align-items:center;font-size:14px}.eyebrow{text-transform:uppercase;letter-spacing:.14em;font-size:12px;font-weight:700;color:#52746b}h1{font-family:Georgia,serif;font-size:clamp(36px,5vw,64px);font-weight:400;margin:12px 0 16px;line-height:1.08}h2{font-size:22px;margin:0 0 14px}p{line-height:1.6}.intro{max-width:700px;color:#526560;margin-bottom:28px}.toolbar{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;margin-bottom:18px}button,select{font:inherit;border:1px solid #81968e;border-radius:9px;padding:11px 15px;min-height:44px;background:#fff;color:#234b43;cursor:pointer}button:hover{background:#edf5ef}button:focus-visible,select:focus-visible,a:focus-visible{outline:3px solid #b85019;outline-offset:4px}.stage{display:grid;grid-template-columns:1.25fr 1fr;min-height:470px;border:1px solid #ced9cd;border-radius:22px;overflow:hidden;background:#fff}.scene{background:linear-gradient(140deg,#dde5d8,#bbc8b9);padding:32px;position:relative;display:flex;flex-direction:column;justify-content:center}.scene-label{font-size:12px;letter-spacing:.08em;text-transform:uppercase;margin:0 0 24px;color:#456052}.notice{padding:30px 24px;background:#fffef6;box-shadow:4px 12px 22px #33433125;transform:rotate(-1deg);border-top:9px solid #326456;border-radius:3px}.notice h2{font-family:Georgia,serif;font-size:29px;letter-spacing:.015em;border-bottom:1px solid #ccd4c5;padding-bottom:18px}.line{display:block;width:100%;text-align:left;margin:12px 0;border:1px dashed #96aaa0;background:transparent;line-height:1.45}.line[aria-pressed="true"]{border:2px solid #236754;background:#e4f2e9;padding:10px 14px;box-shadow:0 0 0 2px #fff}.scene-note{font-size:13px;color:#42574d;margin:22px 0 0}.panel{padding:34px;display:flex;flex-direction:column;justify-content:center;min-width:0}.panel p{overflow-wrap:anywhere}.result-title{font-family:Georgia,serif;font-size:32px;font-weight:400}.translation{font-size:25px;line-height:1.4;color:#205745}.source{font-size:15px;color:#65776e;border-left:3px solid #bbcbbb;padding-left:12px}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}.primary{background:#275e50;color:#fff;border-color:#275e50}.primary:hover{background:#1a4c3d}.warning{background:#fff1d9;border-left:4px solid #bc7916;padding:14px}.word{border-top:1px solid #d7dfd4;padding-top:16px}.hint{font-size:14px;color:#5b6e65}.below{display:grid;grid-template-columns:1fr 1fr;gap:34px;margin-top:30px}.below h2{font-size:17px}.below p{font-size:14px;color:#53675f}footer{font-size:13px;border-top:1px solid #d1dace;margin-top:20px;color:#65766c}[hidden]{display:none!important}noscript{display:block;padding:16px;background:#ffebbe}@media(max-width:720px){header,main,footer{padding:18px}.stage,.below{grid-template-columns:1fr}.scene,.panel{padding:24px}.notice{padding:24px 16px}.notice h2{font-size:24px}.panel{min-height:295px}.toolbar label{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.below{gap:12px}.intro{margin-bottom:22px}header{align-items:flex-start}}@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<header><a href="/coursework/hci/hw3/">← Back to HW3</a><span>Concept prototype · v1</span></header>
+<main>
+<span class="eyebrow">01 / French in context</span>
+<h1>A little help,<br>right where you look.</h1>
+<p class="intro">Understand a French notice without losing its context. This is a clickable simulation with a fictional illustration and fixed translations. It does not use your camera or upload data.</p>
+<div class="toolbar"><label for="scenario">Scenario <select id="scenario"><option value="clear">Clear notice</option><option value="unclear">Unclear text</option></select></label><button id="reset">Reset prototype</button></div>
+<noscript>This interactive prototype requires JavaScript. The three lines mean: entrance temporarily closed; use the door on the right; open 9 am–6 pm.</noscript>
+<div class="stage">
+ <section class="scene" aria-label="Illustrated library notice">
+ <p class="scene-label">Illustrated scene / library entrance</p>
+ <div class="notice" lang="fr"><h2>BIBLIOTHÈQUE</h2>
+ <button class="line" data-line="0" aria-pressed="false">Entrée temporairement fermée</button>
+ <button class="line" data-line="1" aria-pressed="false">Utilisez la porte à droite</button>
+ <button class="line" data-line="2" aria-pressed="false">Ouvert de 9 h à 18 h</button>
+ </div>
+ <p class="scene-note" id="scene-note">Select a line to translate. The original notice stays visible.</p>
+ </section>
+ <section class="panel" aria-label="Translation" aria-live="polite" aria-atomic="true"><div id="result"></div></section>
+</div>
+<div class="below"><section><h2>What is simulated?</h2><p>Selecting a line stands in for pointing at text in AR. The result is predefined. “Unclear text” deliberately simulates recognition failure; it does not measure image quality.</p></section><section><h2>First user exposure</h2><p>Ask another person to try a task before explaining the controls. Record their actual actions and comments in the <a href="observation-sheet.txt" download>blank observation sheet</a>. No test results have been recorded yet.</p></section></div>
+</main>
+<footer>HW3 · Mingyu Zhang · Original concept made with AI assistance. No live AR or translation service is connected.</footer>
+<script>
+const examples = [
+ {original:'Entrée temporairement fermée', translation:'Entrance temporarily closed.', word:'“Fermée” means “closed”. “Temporairement” means “temporarily”.'},
+ {original:'Utilisez la porte à droite', translation:'Use the door on the right.', word:'“À droite” means “on the right”. “La porte” means “the door”.'},
+ {original:'Ouvert de 9 h à 18 h', translation:'Open from 9 am to 6 pm.', word:'“Ouvert” means “open”. “De … à …” gives the start and end of a time interval.'}
+];
+const result=document.getElementById('result'),scenario=document.getElementById('scenario'),lines=[...document.querySelectorAll('.line')];
+let selected=null;
+function mark(){lines.forEach((b,i)=>b.setAttribute('aria-pressed',String(i===selected)));}
+function idle(){selected=null;mark();result.innerHTML='<span class="eyebrow">Ready when you are</span><h2 class="result-title">What does the notice say?</h2><p>Select a French line. Its meaning will appear here, beside the original.</p><p class="hint">You can use a mouse, touch, or Tab and Enter.</p>';}
+function showTranslation(index,focus=false){selected=index;mark();const item=examples[index];result.innerHTML='<span class="eyebrow">French → English</span><h2 class="result-title">Translation</h2><p class="source" lang="fr">'+item.original+'</p><p class="translation">'+item.translation+'</p><div class="actions"><button id="explain" aria-expanded="false" aria-controls="word">Explain words</button><button id="close">Close translation</button></div><p id="word" class="word" hidden>'+item.word+'</p>';
+ document.getElementById('explain').onclick=()=>{const word=document.getElementById('word'),btn=document.getElementById('explain');word.hidden=!word.hidden;btn.setAttribute('aria-expanded',String(!word.hidden));btn.textContent=word.hidden?'Explain words':'Hide word explanation';};
+ document.getElementById('close').onclick=()=>{idle();lines[index].focus();};if(focus)document.getElementById('explain').focus();}
+function showError(index){selected=index;mark();result.innerHTML='<span class="eyebrow">Reading paused</span><h2 class="result-title">Text is not clear enough.</h2><p class="warning">We cannot reliably read this line. No translation is shown.</p><p>In a real AR view, move closer or change the angle, then retry.</p><div class="actions"><button class="primary" id="retry">Try a clearer view</button><button id="original">Return to original</button></div><p class="hint">This failure is part of the simulated scenario.</p>';
+ document.getElementById('retry').onclick=()=>{scenario.value='clear';updateNote();showTranslation(index,true);};document.getElementById('original').onclick=()=>{idle();lines[index].focus();};}
+function updateNote(){document.getElementById('scene-note').textContent=scenario.value==='unclear'?'Unclear-text simulation: select a line to try reading it.':'Select a line to translate. The original notice stays visible.';}
+lines.forEach((b,i)=>b.onclick=()=>scenario.value==='unclear'?showError(i):showTranslation(i));
+scenario.onchange=()=>{updateNote();idle();};
+document.getElementById('reset').onclick=()=>{scenario.value='clear';updateNote();idle();lines[0].focus();};
+idle();
+</script>
+</body></html>
