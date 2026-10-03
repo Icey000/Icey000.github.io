@@ -1,4 +1,4 @@
-import{B as Xo,g as Go,s as Yo,d as Qo,b as Zo,e as Je,M as Jo,f as ts}from"./setting-utils.CODL1rez.js";import{g as Dn,a as es}from"./locale.DrJsotdA.js";import"./config.BfuI2j8x.js";/*!
+import{B as Xo,g as Go,s as Yo,d as Qo,b as Zo,e as Je,M as Jo,f as ts}from"./setting-utils.CODL1rez.js";import{g as Dn,a as es}from"./locale.D4DLtu1w.js";import"./config.BfuI2j8x.js";/*!
  * OverlayScrollbars
  * Version: 2.12.0
  *
