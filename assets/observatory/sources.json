@@ -1,0 +1,42 @@
+[
+  {
+    "file": "codex-workspace.jpeg",
+    "url": "https://developers.openai.com/images/blog/long-horizon-4.jpeg",
+    "source": "https://developers.openai.com/blog/run-long-horizon-tasks-with-codex",
+    "retrieved": "2026-10-03",
+    "width": 1200,
+    "height": 673,
+    "sha256": "03925cce4fc6a9f9d63f0c7fff13e60671b5e895f544296d0564617e70b76e60",
+    "rights": "Third-party product demonstration. Rights remain with OpenAI or Anthropic; included for interface criticism and source attribution, not relicensed by the website theme."
+  },
+  {
+    "file": "codex-plan.jpeg",
+    "url": "https://developers.openai.com/images/blog/long-horizon-6.jpeg",
+    "source": "https://developers.openai.com/blog/run-long-horizon-tasks-with-codex",
+    "retrieved": "2026-10-03",
+    "width": 1200,
+    "height": 937,
+    "sha256": "765dd6024076d6459c78f71864f93211c5aad4cd3eb5a9476d7d75294f75331b",
+    "rights": "Third-party product demonstration. Rights remain with OpenAI or Anthropic; included for interface criticism and source attribution, not relicensed by the website theme."
+  },
+  {
+    "file": "claude-browser.webp",
+    "url": "https://cdn.prod.website-files.com/6889473510b50328dbb70ae6/6a8f16a6d44c900b29172541_aacbc99c7782f29da95a30ed84ff0054_260826-Cowork-InAppBrowser-4K-Thumbnail_003.webp",
+    "source": "https://claude.com/product/cowork",
+    "retrieved": "2026-10-03",
+    "width": 2800,
+    "height": 1575,
+    "sha256": "425af80fdee75462c5be41d203ca6501b8d95ca406bca46243312ccd4f1ae584",
+    "rights": "Third-party product demonstration. Rights remain with OpenAI or Anthropic; included for interface criticism and source attribution, not relicensed by the website theme."
+  },
+  {
+    "file": "claude-spreadsheet.webp",
+    "url": "https://cdn.prod.website-files.com/6889473510b50328dbb70ae6/69c3e9405a173533acdaf552_f0d9b6e44e75fdd2a15586497528ec53_CleanShot%202026-03-25%20at%2009.54.54%402x.webp",
+    "source": "https://claude.com/product/cowork",
+    "retrieved": "2026-10-03",
+    "width": 1662,
+    "height": 1332,
+    "sha256": "f14c725942997aa5d0d1f533ba926a71bb9c61c01dbd8dacb9c1f659afe46a62",
+    "rights": "Third-party product demonstration. Rights remain with OpenAI or Anthropic; included for interface criticism and source attribution, not relicensed by the website theme."
+  }
+]
