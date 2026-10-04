@@ -1,0 +1,423 @@
+%PDF-1.4
+%‚„œ”
+1 0 obj
+<<
+/Producer (pypdf)
+/Title (Station Rescue \055 Open Airlock Post\055Mortem)
+/Author (Mingyu Zhang)
+>>
+endobj
+2 0 obj
+<<
+/Type /Pages
+/Count 2
+/Kids [ 4 0 R 9 0 R ]
+>>
+endobj
+3 0 obj
+<<
+/Type /Catalog
+/Pages 2 0 R
+>>
+endobj
+4 0 obj
+<<
+/Contents 5 0 R
+/MediaBox [ 0 0 595.2756 841.8898 ]
+/Resources <<
+/Font <<
+/F1 6 0 R
+/F1-0 7 0 R
+/F2 8 0 R
+>>
+/ProcSet [ /ImageB /ImageC /ImageI /PDF /Text ]
+>>
+/Rotate 0
+/Trans <<
+>>
+/Type /Page
+/Annots [ ]
+/Parent 2 0 R
+>>
+endobj
+5 0 obj
+<<
+/Length 4428
+>>
+stream
+q
+1 0 0 1 0 0 cm  BT /F1 12 Tf 14.4 TL ET
+q
+.835294 .866667 .823529 RG
+n 44 43 m 551.2756 43 l S
+BT /F1 8 Tf 9.6 TL ET
+.356863 .403922 .364706 rg
+BT 1 0 0 1 44 29 Tm (Station Rescue - development post-mortem / draft) Tj T* ET
+BT 1 0 0 1 546.8276 29 Tm (1) Tj T* ET
+Q
+q
+1 0 0 1 50 767.8898 cm
+q
+.12549 .168627 .137255 rg
+BT 1 0 0 1 0 4 Tm /F2 24 Tf 28 TL (An open door without a floor) Tj T* ET
+Q
+Q
+q
+1 0 0 1 50 741.8898 cm
+q
+.356863 .403922 .364706 rg
+BT 1 0 0 1 0 4 Tm /F1 10 Tf 14 TL (Station Rescue / M-07 | Unity 6000.6.4f1 | 2026-10-03 Development post-mortem - draft for student review) Tj T* ET
+Q
+Q
+q
+1 0 0 1 50 711.8898 cm
+q
+.168627 .384314 .25098 rg
+BT 1 0 0 1 0 4 Tm /F2 12 Tf 16 TL (The problem and expected behaviour) Tj T* ET
+Q
+Q
+q
+1 0 0 1 50 676.8898 cm
+q
+.12549 .168627 .137255 rg
+BT 1 0 0 1 0 18.7 Tm /F1 10.3 Tf 14.5 TL (During a playtest, the player restored power, waited for the airlock to open, and drove the robot through it) Tj T* (without pressing Interact. The robot fell below the station instead of staying on the visible docking platform.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 50 625.3898 cm
+q
+.12549 .168627 .137255 rg
+BT 1 0 0 1 0 33.2 Tm /F1 10.3 Tf 14.5 TL (This game deliberately uses manual boarding. Reaching an open airlock should not complete the mission.) Tj T* (However, the player should be able to walk onto its platform, remain supported, and return to the boarding) Tj T* (marker to press E or click the action button.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 50 595.3898 cm
+q
+.168627 .384314 .25098 rg
+BT 1 0 0 1 0 4 Tm /F2 12 Tf 16 TL (Narrowing down the cause) Tj T* ET
+Q
+Q
+q
+1 0 0 1 50 531.3898 cm
+q
+.12549 .168627 .137255 rg
+BT 1 0 0 1 0 47.7 Tm /F1 10.3 Tf 14.5 TL (First, the boarding state and door-collision rules were inspected. One candidate explanation was premature) Tj T* (removal of the door colliders. The code disables those colliders only when IsOpen is true, and the report) Tj T* (concerned a fully open door. Keeping that closed-door barrier forever would hide the symptom while) Tj T* (contradicting the visible open passage.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 50 479.8898 cm
+q
+.12549 .168627 .137255 rg
+BT 1 0 0 1 0 33.2 Tm /F1 10.3 Tf 14.5 TL (A second possibility was that walking through the exit should trigger automatic boarding. That was rejected) Tj T* (as a design fix: the agreed interaction requires an explicit action, and the task state correctly stayed Installed) Tj T* (without E. Automatic completion would change the rule rather than repair the unsafe space.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 50 413.8898 cm
+q
+.12549 .168627 .137255 rg
+BT 1 0 0 1 0 47.7 Tm /F1 10.3 Tf 14.5 TL (The scene builder then revealed the physical cause. LandingPad was created as a visible cube, but the) Tj T* (shape helper defaults to a non-solid object. Its renderer existed while its Collider had been removed.) Tj T* (Opening the hatch therefore exposed a platform with no physical support, followed by an unguarded outer) Tj T* (edge.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 50 383.8898 cm
+q
+.168627 .384314 .25098 rg
+BT 1 0 0 1 0 4 Tm /F2 12 Tf 16 TL (Evidence from a failing regression) Tj T* ET
+Q
+Q
+q
+1 0 0 1 50 334.3898 cm
+q
+.12549 .168627 .137255 rg
+BT 1 0 0 1 0 33.2 Tm /F1 10.3 Tf 14.5 TL (A new check powered dock A, placed the robot before the airlock, and drove forward for three seconds with) Tj T* (the real PlayerMotor and Physics.Simulate, without interacting. On the old saved scene, the robot reached y) Tj T* (= -26.59; the support assertion failed and Unity exited with code 1.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 50 304.3898 cm
+q
+.168627 .384314 .25098 rg
+BT 1 0 0 1 0 4 Tm /F2 12 Tf 16 TL (Why earlier checks missed it) Tj T* ET
+Q
+Q
+q
+1 0 0 1 50 254.8898 cm
+q
+.12549 .168627 .137255 rg
+BT 1 0 0 1 0 33.2 Tm /F1 10.3 Tf 14.5 TL (The previous 293 Editor checks and standalone tests covered powering, reaching a boarding marker, and) Tj T* (explicit boarding. They did not continue through the doorway without E. Their success was evidence for) Tj T* (those paths, not proof that all newly reachable space was safe.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 50 233.8898 cm
+q
+.356863 .403922 .364706 rg
+BT 1 0 0 1 0 4 Tm /F1 9 Tf 13 TL (Source: StationBuilder.Dock, DockGate.Apply and the pre-fix log Builds/dock-boundary-before-fix.log.) Tj T* ET
+Q
+Q
+ 
+
+Q
+
+q
+0.0 0.0 595.2756 841.8898 re
+W
+n
+1 0 0 1 0 0 cm
+BT
+/F1-0 12 Tf
+14.4 TL
+ET
+BT
+/F1-0 9 Tf
+10.8 TL
+ET
+0.36 0.4 0.37 rg
+BT
+1 0 0 1 462.7336 818.8898 Tm
+(Author\072 Mingyu Zhang) Tj
+T*
+ET
+Q
+
+
+endstream
+endobj
+6 0 obj
+<<
+/BaseFont /Helvetica
+/Encoding /WinAnsiEncoding
+/Name /F1
+/Subtype /Type1
+/Type /Font
+>>
+endobj
+7 0 obj
+<<
+/BaseFont /Helvetica
+/Encoding /WinAnsiEncoding
+/Name /F1
+/Subtype /Type1
+/Type /Font
+>>
+endobj
+8 0 obj
+<<
+/BaseFont /Helvetica-Bold
+/Encoding /WinAnsiEncoding
+/Name /F2
+/Subtype /Type1
+/Type /Font
+>>
+endobj
+9 0 obj
+<<
+/Contents 10 0 R
+/MediaBox [ 0 0 595.2756 841.8898 ]
+/Resources <<
+/Font <<
+/F1 6 0 R
+/F1-0 11 0 R
+/F2 8 0 R
+>>
+/ProcSet [ /ImageB /ImageC /ImageI /PDF /Text ]
+>>
+/Rotate 0
+/Trans <<
+>>
+/Type /Page
+/Annots [ ]
+/Parent 2 0 R
+>>
+endobj
+10 0 obj
+<<
+/Length 5374
+>>
+stream
+q
+1 0 0 1 0 0 cm  BT /F1 12 Tf 14.4 TL ET
+q
+.835294 .866667 .823529 RG
+n 44 43 m 551.2756 43 l S
+BT /F1 8 Tf 9.6 TL ET
+.356863 .403922 .364706 rg
+BT 1 0 0 1 44 29 Tm (Station Rescue - development post-mortem / draft) Tj T* ET
+BT 1 0 0 1 546.8276 29 Tm (2) Tj T* ET
+Q
+q
+1 0 0 1 50 767.8898 cm
+q
+.12549 .168627 .137255 rg
+BT 1 0 0 1 0 4 Tm /F2 24 Tf 28 TL (Repair the space, preserve the rule) Tj T* ET
+Q
+Q
+q
+1 0 0 1 50 741.8898 cm
+q
+.356863 .403922 .364706 rg
+BT 1 0 0 1 0 4 Tm /F1 10 Tf 14 TL (The same problem, followed through implementation and verification) Tj T* ET
+Q
+Q
+q
+1 0 0 1 50 711.8898 cm
+q
+.168627 .384314 .25098 rg
+BT 1 0 0 1 0 4 Tm /F2 12 Tf 16 TL (The fix) Tj T* ET
+Q
+Q
+q
+1 0 0 1 50 662.3898 cm
+q
+.12549 .168627 .137255 rg
+BT 1 0 0 1 0 33.2 Tm /F1 10.3 Tf 14.5 TL (LandingPad now retains a solid BoxCollider. Side rails and an end rail also retain colliders, so an open) Tj T* (airlock leads to a supported, bounded platform. These objects are part of the repeatable scene builder,) Tj T* (preventing the fix from disappearing when the generated scene is upgraded again.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 50 610.8898 cm
+q
+.12549 .168627 .137255 rg
+BT 1 0 0 1 0 33.2 Tm /F1 10.3 Tf 14.5 TL (Boarding remains manual. The hatch animation still opens normally; walking through it does not change the) Tj T* (mission to Complete. The player returns to the visible marker and chooses E or the mouse action button to) Tj T* (board.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 50 580.8898 cm
+q
+.168627 .384314 .25098 rg
+BT 1 0 0 1 0 4 Tm /F2 12 Tf 16 TL (Verification and a test-runner correction) Tj T* ET
+Q
+Q
+q
+1 0 0 1 50 516.8898 cm
+q
+.12549 .168627 .137255 rg
+BT 1 0 0 1 0 47.7 Tm /F1 10.3 Tf 14.5 TL (The new Editor regression runs against all three selected docks. It drives forward and sideways after) Tj T* (opening, checks that the robot stays above the platform, checks that rails limit its motion, and verifies that no) Tj T* (completion occurs without interaction. The same support assertion that failed before the fix now passes;) Tj T* (observed robot height was approximately 0.55-0.56.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 50 450.8898 cm
+q
+.12549 .168627 .137255 rg
+BT 1 0 0 1 0 47.7 Tm /F1 10.3 Tf 14.5 TL (The first Windows run passed the platform and rail checks but failed the return route at dock B. The test) Tj T* (navigator stopped steering sideways too late, leaving residual speed that carried it beyond the centreline) Tj T* (toward a doorpost. It was corrected to use the existing braking-aware waypoint control, then the actual) Tj T* (keyboard route was rerun. This failure was kept separate from the platform defect.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 50 384.8898 cm
+q
+.12549 .168627 .137255 rg
+BT 1 0 0 1 0 47.7 Tm /F1 10.3 Tf 14.5 TL (The final Editor report contains 317 passed checks. The Windows report contains 176 passed checks,) Tj T* (including walking past each of A/B/C without E, testing the side rail, walking back, and manually boarding. It) Tj T* (also preserves the full WASD delivery mission and the existing interaction, pause, language and restart) Tj T* (checks.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 50 354.8898 cm
+q
+.168627 .384314 .25098 rg
+BT 1 0 0 1 0 4 Tm /F2 12 Tf 16 TL (What will change in the next design brief) Tj T* ET
+Q
+Q
+q
+1 0 0 1 50 319.8898 cm
+q
+.12549 .168627 .137255 rg
+BT 1 0 0 1 0 18.7 Tm /F1 10.3 Tf 14.5 TL (1. Describe the contract between appearance and physics: a visible route needs physical support, or an) Tj T* (explicit intentional-fall rule with recovery.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 50 282.8898 cm
+q
+.12549 .168627 .137255 rg
+BT 1 0 0 1 0 18.7 Tm /F1 10.3 Tf 14.5 TL (2. Treat state transitions as changes to reachable space. Test the area behind an opening door, not just) Tj T* (whether the door animation or task flag is correct.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 50 245.8898 cm
+q
+BT 1 0 0 1 0 18.7 Tm 14.5 TL /F1 10.3 Tf .12549 .168627 .137255 rg (3. Write acceptance cases as precondition -) Tj (> player input -) Tj (> expected result. Include no input, wrong input,) Tj T* (repeated input, movement beyond a goal, pause and restart.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 50 208.8898 cm
+q
+.12549 .168627 .137255 rg
+BT 1 0 0 1 0 18.7 Tm /F1 10.3 Tf 14.5 TL (4. Preserve the chosen interaction rule while repairing the world. A shortcut such as automatic boarding can) Tj T* (conceal a defect and change the player's experience.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 50 178.8898 cm
+q
+.168627 .384314 .25098 rg
+BT 1 0 0 1 0 4 Tm /F2 12 Tf 16 TL (Scope and provenance) Tj T* ET
+Q
+Q
+q
+1 0 0 1 50 133.8898 cm
+q
+.356863 .403922 .364706 rg
+BT 1 0 0 1 0 30 Tm /F1 9 Tf 13 TL (Coding, test execution and this draft were assisted by AI. The problem came from the user's actual playtest; diagnosis and) Tj T* (measurements come from the repository and recorded runs. The student should review the draft, add their own) Tj T* (understanding and follow the course's AI-use rules before submission.) Tj T* ET
+Q
+Q
+q
+1 0 0 1 50 99.88976 cm
+q
+.356863 .403922 .364706 rg
+BT 1 0 0 1 0 17 Tm /F1 9 Tf 13 TL (Reports: docs/station-v2_1-validation.json; docs/screenshots/station-v2_1/standalone-validation.json. This draft discusses) Tj T* (one observed development problem and is limited to two pages.) Tj T* ET
+Q
+Q
+ 
+
+Q
+
+q
+0.0 0.0 595.2756 841.8898 re
+W
+n
+1 0 0 1 0 0 cm
+BT
+/F1-0 12 Tf
+14.4 TL
+ET
+BT
+/F1-0 9 Tf
+10.8 TL
+ET
+0.36 0.4 0.37 rg
+BT
+1 0 0 1 462.7336 818.8898 Tm
+(Author\072 Mingyu Zhang) Tj
+T*
+ET
+Q
+
+
+endstream
+endobj
+11 0 obj
+<<
+/BaseFont /Helvetica
+/Encoding /WinAnsiEncoding
+/Name /F1
+/Subtype /Type1
+/Type /Font
+>>
+endobj
+xref
+0 12
+0000000000 65535 f 
+0000000015 00000 n 
+0000000134 00000 n 
+0000000199 00000 n 
+0000000248 00000 n 
+0000000491 00000 n 
+0000004971 00000 n 
+0000005078 00000 n 
+0000005185 00000 n 
+0000005297 00000 n 
+0000005542 00000 n 
+0000010969 00000 n 
+trailer
+<<
+/Size 12
+/Root 3 0 R
+/Info 1 0 R
+>>
+startxref
+11077
+%%EOF

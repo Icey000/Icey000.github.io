@@ -1,0 +1,89 @@
+{
+  "project": "Station Rescue: M-07",
+  "gameRelease": "A1.0",
+  "documentedOn": "2026-10-04",
+  "origin": "The validated Windows game and its recorded project checks",
+  "images": [
+    {
+      "file": "arc-live-drop.png",
+      "source": "https://github.com/Icey000/station-rescue-m07/blob/main/docs/screenshots/arc-live-drop.png",
+      "sha256": "a04e6beef254bbf9536ed4f1f5516022e20acd6ebe86361a6257f8961b75ba5e",
+      "width": 1024,
+      "height": 768,
+      "bytes": 389059,
+      "kind": "Actual Windows game capture"
+    },
+    {
+      "file": "boost.png",
+      "source": "https://github.com/Icey000/station-rescue-m07/blob/main/docs/screenshots/boost.png",
+      "sha256": "5d1c84f2c8fe896858145ca4a5433aaf975934f3ed0c5b680aa253d560a967a3",
+      "width": 1280,
+      "height": 720,
+      "bytes": 370100,
+      "kind": "Actual Windows game capture"
+    },
+    {
+      "file": "complete.png",
+      "source": "https://github.com/Icey000/station-rescue-m07/blob/main/docs/screenshots/complete.png",
+      "sha256": "133f3e663cd26f6bd5809fd9f2c8003f77c27824586029138ec9ac13b5894ff6",
+      "width": 1280,
+      "height": 720,
+      "bytes": 243787,
+      "kind": "Actual Windows game capture"
+    },
+    {
+      "file": "dock-safe-A.png",
+      "source": "https://github.com/Icey000/station-rescue-m07/blob/main/docs/screenshots/dock-safe-A.png",
+      "sha256": "c1086801478b3e31ed9138d3e1abd119ade3530e59bf0d8e42b5b1f98ba3c056",
+      "width": 1280,
+      "height": 720,
+      "bytes": 379667,
+      "kind": "Actual Windows game capture"
+    },
+    {
+      "file": "game-en.png",
+      "source": "https://github.com/Icey000/station-rescue-m07/blob/main/docs/screenshots/game-en.png",
+      "sha256": "61f2e215dab720b8930cdd8a998b27a7f6f583b3f4ebea6cd6d828d17fb78866",
+      "width": 1024,
+      "height": 768,
+      "bytes": 394620,
+      "kind": "Actual Windows game capture"
+    },
+    {
+      "file": "game-zh.png",
+      "source": "https://github.com/Icey000/station-rescue-m07/blob/main/docs/screenshots/game-zh.png",
+      "sha256": "c88d474ec6a9a1ba905d865ebf737325267fb7394ca62311c0635969fe834db3",
+      "width": 1280,
+      "height": 720,
+      "bytes": 369522,
+      "kind": "Actual Windows game capture"
+    },
+    {
+      "file": "menu-en.png",
+      "source": "https://github.com/Icey000/station-rescue-m07/blob/main/docs/screenshots/menu-en.png",
+      "sha256": "53a7f30ab933a00a810d4a0efc24333ca913343bb38f7676893a54d9d2959c36",
+      "width": 1280,
+      "height": 720,
+      "bytes": 144982,
+      "kind": "Actual Windows game capture"
+    },
+    {
+      "file": "menu-zh.png",
+      "source": "https://github.com/Icey000/station-rescue-m07/blob/main/docs/screenshots/menu-zh.png",
+      "sha256": "4c1bbc8c9dc493b50d9d190b1c72f62159103cd27f3ad669e71093684aa301c1",
+      "width": 1024,
+      "height": 768,
+      "bytes": 155789,
+      "kind": "Actual Windows game capture"
+    },
+    {
+      "file": "power-flow.png",
+      "source": "https://github.com/Icey000/station-rescue-m07/blob/main/docs/screenshots/power-flow.png",
+      "sha256": "1a2a70d603588065f5787a67bc3a856bc57310cd4de15d74e5a4e7745f6fb79e",
+      "width": 1280,
+      "height": 720,
+      "bytes": 358229,
+      "kind": "Actual Windows game capture"
+    }
+  ]
+}
