@@ -1,0 +1,12 @@
+{
+    "unity": "6000.6.4f1",
+    "gpu": "AMD Radeon(TM) 780M",
+    "api": "Direct3D12",
+    "modelSource": "Niantic SPZ hornedlizard public sample; not student-trained",
+    "supportsCompute": true,
+    "validAsset": true,
+    "splatCount": 786233,
+    "width": 1280,
+    "height": 800,
+    "views": 3
+}
