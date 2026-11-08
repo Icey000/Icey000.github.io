@@ -1,7 +1,7 @@
 <!DOCTYPE html><html lang="zh-CN" class="bg-[var(--page-bg)] transition text-[14px] md:text-[16px]" data-overlayscrollbars-initialize data-astro-cid-sckkx6r4 style="--bannerOffset: 5vh;--banner-height-home: 40vh;--banner-height: 30vh;--configHue: 165;--page-width: 75rem;"> <head><title>Lab 3 · 用 Unity ML-Agents 训练救援机器人 - Mingyu Zhang</title><script>
           try { document.documentElement.dataset.view = localStorage.getItem('portfolio-view') === 'reading' ? 'reading' : 'showcase'; }
           catch { document.documentElement.dataset.view = 'showcase'; }
-        </script><meta charset="UTF-8"><meta name="description" content="在 Unity 6 中训练的 PPO 救援机器人：可以用本地大模型直接下指令，也可以作为会推断你目标的队友一起玩；完整记录每次失败与修正。"><meta name="author" content="Mingyu Zhang"><link rel="canonical" href="https://icey000.github.io/zh/coursework/hci/lab-ml-agent/"><meta property="og:site_name" content="Mingyu Zhang"><meta property="og:url" content="https://icey000.github.io/zh/coursework/hci/lab-ml-agent/"><meta property="og:title" content="Lab 3 · 用 Unity ML-Agents 训练救援机器人 - Mingyu Zhang"><meta property="og:description" content="在 Unity 6 中训练的 PPO 救援机器人：可以用本地大模型直接下指令，也可以作为会推断你目标的队友一起玩；完整记录每次失败与修正。"><meta property="og:type" content="website"><meta name="twitter:card" content="summary_large_image"><meta property="twitter:url" content="https://icey000.github.io/zh/coursework/hci/lab-ml-agent/"><meta name="twitter:title" content="Lab 3 · 用 Unity ML-Agents 训练救援机器人 - Mingyu Zhang"><meta name="twitter:description" content="在 Unity 6 中训练的 PPO 救援机器人：可以用本地大模型直接下指令，也可以作为会推断你目标的队友一起玩；完整记录每次失败与修正。"><meta name="viewport" content="width=device-width"><meta name="generator" content="Astro v5.13.10"><link rel="icon" href="/images/monogram.svg" sizes="any"><!-- Set the theme before the page is rendered to avoid a flash --><script>(function(){const DEFAULT_THEME = "auto";
+        </script><meta charset="UTF-8"><meta name="description" content="在 Unity 6 中训练的 PPO 救援机器人：可以用本地大模型直接下指令，也可以当队友一起玩。发电机被只有开关才能断电的电网封住，你和机器人必须互相开门。完整记录每次失败与修正。"><meta name="author" content="Mingyu Zhang"><link rel="canonical" href="https://icey000.github.io/zh/coursework/hci/lab-ml-agent/"><meta property="og:site_name" content="Mingyu Zhang"><meta property="og:url" content="https://icey000.github.io/zh/coursework/hci/lab-ml-agent/"><meta property="og:title" content="Lab 3 · 用 Unity ML-Agents 训练救援机器人 - Mingyu Zhang"><meta property="og:description" content="在 Unity 6 中训练的 PPO 救援机器人：可以用本地大模型直接下指令，也可以当队友一起玩。发电机被只有开关才能断电的电网封住，你和机器人必须互相开门。完整记录每次失败与修正。"><meta property="og:type" content="website"><meta name="twitter:card" content="summary_large_image"><meta property="twitter:url" content="https://icey000.github.io/zh/coursework/hci/lab-ml-agent/"><meta name="twitter:title" content="Lab 3 · 用 Unity ML-Agents 训练救援机器人 - Mingyu Zhang"><meta name="twitter:description" content="在 Unity 6 中训练的 PPO 救援机器人：可以用本地大模型直接下指令，也可以当队友一起玩。发电机被只有开关才能断电的电网封住，你和机器人必须互相开门。完整记录每次失败与修正。"><meta name="viewport" content="width=device-width"><meta name="generator" content="Astro v5.13.10"><link rel="icon" href="/images/monogram.svg" sizes="any"><!-- Set the theme before the page is rendered to avoid a flash --><script>(function(){const DEFAULT_THEME = "auto";
 const LIGHT_MODE = "light";
 const DARK_MODE = "dark";
 const AUTO_MODE = "auto";
@@ -301,7 +301,7 @@ if (document.readyState === 'loading') {
 <li>有一次试玩中，策略<strong>卡在电缆旁</strong>反复触电，直到我换布局——这正是它 2.7% 超时率背后的同一个失败。语言层再好，也受限于下面的策略。</li>
 <li>让系统可靠的是“程序落地”。语言模型擅长<em>读懂</em>，不该让它负责<em>测量</em>。</li>
 </ul></section></section>
-<section><h2 id="一起玩人机协作">一起玩：人机协作<a class="anchor" href="#一起玩人机协作"><span class="anchor-icon" data-pagefind-ignore="">#</span></a></h2><p>下指令只是和机器人合作的一种方式。在协作版里，<strong>人也下场</strong>：</p><ul>
+<section><h2 id="一起玩人机协作">一起玩：人机协作<a class="anchor" href="#一起玩人机协作"><span class="anchor-icon" data-pagefind-ignore="">#</span></a></h2><p>下指令只是和机器人合作的一种方式。在协作版里，<strong>人也下场</strong>。下面先是第一版的玩法，后文还有改版：</p><ul>
 <li>发电机现在需要<strong>两颗</strong>电芯都装上，所以必须分工；</li>
 <li>玩家用 WASD 控制一个角色，规则和机器人一样（拿起、安装、会被电晕）；</li>
 <li>场边有一块<strong>断电踏板</strong>：有人站在上面时，所有电缆停止放电——机器人看到电缆断电，就能安全穿过。</li>
@@ -359,10 +359,80 @@ if (document.readyState === 'loading') {
 <table><thead><tr><th>各 150 回合</th><th>固定分工</th><th>自适应</th></tr></thead><tbody><tr><td>机器人和搭档去拿<strong>同一颗</strong>的回合</td><td>48.0%（95% 置信区间 40–56）</td><td><strong>3.3%</strong>（0.7–6.7）</td></tr><tr><td>恢复供电的平均用时（完成的回合）</td><td>6.26 秒</td><td>6.15 秒</td></tr><tr><td>60 秒内完成</td><td>98.7%</td><td>98.7%</td></tr><tr><td>目标推断准确率（对照搭档真实目标）</td><td>—</td><td>约 96%</td></tr></tbody></table><p><strong>推断搭档的目标，几乎消除了重复劳动。</strong> 0.11 秒的时间差<strong>不能</strong>下结论（自助法 95% 置信区间 −0.73 到 0.84 秒），所以我不声称自适应队友更快。修复前同样的测试是 44.0% → 0.7%；物理计时不完全确定，重复跑几次这些数字会差几个百分点。剩下的失败局，是模拟搭档拿着电芯一次次走进通电的电缆（一局触电 30 多次），这暴露的是我写的替身的缺陷，不是机器人的。而且模拟搭档检验的是我的代码，不是关于真人的证据。</p></section><section><h3 id="第一次试玩发现的问题">第一次试玩发现的问题<a class="anchor" href="#第一次试玩发现的问题"><span class="anchor-icon" data-pagefind-ignore="">#</span></a></h3><p>之后我自己玩了一遍（自由试玩，不属于任何测试）。马上发现两个问题，而 300 回合模拟一个都没发现：</p><ul>
 <li><strong>机器人有时会一直不动，直到时间耗尽。</strong> 我有 3 局都卡到 60 秒上限。机器人装好一颗之后，只要我离最后那颗更近，它就让给我去拿；即使我站在断电踏板上不动、正在帮它断电，它也一直干等。只剩一颗时，“你要去拿它”的概率永远约等于 100%，光看这个概率分不清“正在走过去”和“只是站在附近”。模拟搭档从来不会站着不动，所以模拟测试没测出来。现在改成：只有你真的在朝那颗走（停在电缆前等待有 1.5 秒宽限），机器人才让给你；你站上断电踏板，或者在去拿的路上被电了两次，它就立刻接手。</li>
 <li><strong>触电不像惩罚。</strong> 我的角色只是突然停住，我不知道为什么。现在触电时会冒电弧、蓝色闪屏、发出电流声、镜头震动，被电晕的角色会闪烁，头顶出现“ZAP!”和眩晕倒计时条；电缆通电前 0.45 秒还会先闪烁预警。这些都只改画面，机器人的感知和游戏规则不变。另外，被电时掉落的电芯现在会落在电缆旁边，不会掉在电缆上让谁都拿不到。</li>
-</ul><p><img src="/images/lab3-ml-agent/coop-shock-feedback.png" alt="触电反馈：电弧、闪屏，以及带眩晕倒计时的“ZAP! You are stunned”提示"></p><p>试玩还让我意识到：这个游戏更像是<strong>和机器人赛跑</strong>，而不是合作。两边很少需要对方，断电踏板是唯一真正的相互依赖。让人和机器人真正需要彼此，是下一步的设计重点，比继续调参数更重要。</p></section><section><h3 id="真正的测试已备好的真人测试工具包">真正的测试：已备好的真人测试工具包<a class="anchor" href="#真正的测试已备好的真人测试工具包"><span class="anchor-icon" data-pagefind-ignore="">#</span></a></h3><p>真正重要的是人怎么体验这几种队友——能不能预测它、信不信任它、屏幕上的“猜测”有没有帮助。我准备了一个在这台笔记本上运行的被试内实验：</p><ul>
+</ul><p><img src="/images/lab3-ml-agent/coop-shock-feedback.png" alt="触电反馈：电弧、闪屏，以及带眩晕倒计时的“ZAP! You are stunned”提示"></p><p>试玩还让我意识到：这个游戏更像是<strong>和机器人赛跑</strong>，而不是合作。两边很少需要对方，断电踏板是唯一真正的相互依赖。让人和机器人真正需要彼此，比继续调参数更重要，所以接下来我改的就是这个。</p></section><section><h3 id="改成真合作被电网封住的发电机房">改成真合作：被电网封住的发电机房<a class="anchor" href="#改成真合作被电网封住的发电机房"><span class="anchor-icon" data-pagefind-ignore="">#</span></a></h3><p><strong>新规则：<strong>发电机现在放在角落的一个房间里，四周被两条</strong>永远不会自己断电</strong>的电缆封住。只有站在<strong>断电开关</strong>（黄色踏板）上才能让电网断电：房间外一个，房间里一个。谁都没法独自把电芯送进去，两边必须轮流配合：一个人按住开关，另一个人通过；进了房间的人再从里面给对方开门。</p><ul>
+<li><strong>机器人会求助。</strong> 它拿着电芯走到电网前会停下，头顶气泡显示“Hold the breaker for me!”（帮我按住开关！），同时响一声提示音，你这一侧的开关上方闪烁“▼ STAND HERE”（站这里）。</li>
+<li><strong>你也可以叫机器人帮忙。</strong> 按 <strong>E</strong>，或者输入“按住开关” / “hold the breaker”，机器人就走到它那一侧的开关上，一直站到你通过为止（“Breaker held — go!”）。这条指令用关键词规则处理，不经过语言模型，因为原来的“去拿哪颗电芯”的格式里没有这一项。</li>
+<li><strong>三种队友的区别变成了“怎么帮忙”。</strong> <em>固定分工</em>只在你开口时才去按开关。<em>自适应</em>除了推断你要拿哪颗，看到你拿着电芯走向电网时还会主动去按开关。它只在“能和你差不多同时到”时才提前出发，免得白白丢下自己的活。<em>语言指令</em>等你打字下令。</li>
+<li><strong>游戏感：</strong> 90 秒备用电源倒计时、每局星级评分、局末统计“机器人给你开门几次 / 你给机器人开门几次”。碰到电网会被弹回自己那一侧。不弹回的话，站在一条永不断电的电缆上，眩晕一结束就会再被电一次，模拟里有一局被电了 50 多次。</li>
+</ul><p><img src="/images/lab3-ml-agent/coop-fence-robot-asks.png" alt="房间里的机器人被通电的电网挡住，请求按住开关；你这一侧的开关上方显示 STAND HERE"></p><p><img src="/images/lab3-ml-agent/coop-fence-robot-holds.png" alt="自适应机器人看到玩家拿着橙色电芯，主动站上了外面的开关；电网熄灭，玩家可以通过"></p><p><strong>让训练好的机器人学会配合，暴露了它学到的东西的边界。</strong> 每个修复都来自对失败局的逐帧记录：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>出了什么问题</th><th>原因</th><th>修复</th></tr></thead><tbody><tr><td>让它去按开关，它绕着开关转了一整局</td><td>它训练时找的是电芯和发电机，射线传感器能“看见”它们；开关只是地上的一块区域，而且训练时只要走到目标 1 米左右就算完成</td><td>去开关的路改用脚本（直线走，遇到房间拐角就绕开）</td></tr><tr><td>拿着电芯时，它停在离电网 4 米外徘徊，从不求助</td><td>它学会的是“离通电电缆远一点，等它自己断电”，但这道电网永远不会自己断</td><td>用脚本让它走到电网前，再停下求助</td></tr><tr><td>搭档打开电网后，它不往里走反而走开，两边一直互相等</td><td>原因不明，策略从没遇到过这种情况</td><td>穿过电网这一段也改用脚本，过去以后再交还给神经网络</td></tr></tbody></table><p>所以训练出的神经网络仍然负责它学过的事：拿电芯、绕开电缆送到发电机。围绕电网的新技能是手写的。更干净的做法是带着搭档和电网重新训练一个策略；我把这一点写进局限，而不是藏起来。</p><p>修复后，每种队友各模拟 150 局：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>各 150 回合，封闭机房</th><th>固定分工</th><th>自适应</th></tr></thead><tbody><tr><td>90 秒内完成</td><td>100%</td><td>100%</td></tr><tr><td>恢复供电的平均用时</td><td>8.31 秒</td><td><strong>6.41 秒</strong></td></tr><tr><td>搭档拿着电芯在通电电网前等待的时间</td><td>2.33 秒</td><td><strong>0.36 秒</strong></td></tr><tr><td>每局搭档需要开口求助的次数</td><td>0.90</td><td><strong>0</strong></td></tr><tr><td>两边去拿同一颗电芯的回合</td><td>50.0%</td><td>2.0%</td></tr><tr><td>每局开门次数：机器人给搭档 / 搭档给机器人</td><td>0.91 / 1.34</td><td>1.00 / 1.00</td></tr></tbody></table><p>这一次，会预判的队友<strong>确实</strong>更快：每局快 1.9 秒（自助法 95% 置信区间 1.7–2.1 秒），搭档在电网前少等 2.0 秒（置信区间 1.8–2.2 秒）。两种队友每局都要靠搭档开一次门，也给搭档开一次门，这正是这次改版的目的。不过这仍然是对着写好规则的替身测出来的；真人觉得好不好玩，要靠真人测试来回答，所以我在问卷里加了“和这个机器人一起玩很有意思”这一题。</p></section><section><h3 id="真正的测试已备好的真人测试工具包">真正的测试：已备好的真人测试工具包<a class="anchor" href="#真正的测试已备好的真人测试工具包"><span class="anchor-icon" data-pagefind-ignore="">#</span></a></h3><p>真正重要的是人怎么体验这几种队友——能不能预测它、信不信任它、屏幕上的“猜测”有没有帮助。我准备了一个在这台笔记本上运行的被试内实验：</p><ul>
 <li>一键启动，输入被试编号；先练习一回合，再依次体验三种队友各 3 回合，顺序自动轮换（拉丁方）；</li>
-<li>每回合自动记录到 CSV（用时、是否完成、触电、机器人的目标被玩家抢走几次、改计划几次、打了几条指令）；</li>
-<li>每种队友一页问卷（是否按我想的做、可预测性、信任、团队感、是否碍事、脑力负担；偏好排序；“猜测”显示是否有用）；</li>
+<li>每回合自动记录到 CSV（用时、是否完成、触电、机器人的目标被玩家抢走几次、改计划几次、打了几条指令、在电网前等了多久、双方各求助几次、各给对方开门几次）；</li>
+<li>每种队友一页问卷（是否按我想的做、可预测性、信任、团队感、是否碍事、脑力负担、好不好玩；偏好排序；“猜测”显示是否有用）；</li>
 <li>分析脚本按条件输出均值。3–6 名被试时，只做描述性报告，并配上被试的原话。</li>
 </ul><p><img src="/images/lab3-ml-agent/coop-study.png" alt="测试模式：每个阶段前显示中性的条件编号和说明"></p><p><strong>状态：还没有真人玩过。</strong> 做完测试后会把真实结果补在这里。</p></section></section>
 <section><h2 id="给后来者的建议">给后来者的建议<a class="anchor" href="#给后来者的建议"><span class="anchor-icon" data-pagefind-ignore="">#</span></a></h2><ul>
@@ -379,7 +449,8 @@ if (document.readyState === 'loading') {
 <li>每个策略只用一个随机种子、300 种布局评估；还没有用不同种子重复训练，所以数字代表一次训练，不是分布。</li>
 <li>语言测试规模小（45 + 20 条），而且是我自己写的；它们说明每次改动的方向，不是基准测试。</li>
 <li>人机协作的对比目前用的是模拟搭档。真人测试已准备好但还没做，所以不对“人怎么体验这三种队友”下任何结论。</li>
-<li>机器人的射线不会标记玩家，策略训练时身边也没有人，所以它不会主动给玩家让路；训练一个“知道身边有人”的策略是自然的下一步。</li>
+<li>机器人的射线不会标记玩家，策略训练时身边也没有人，所以它不会主动给玩家让路。</li>
+<li>在封闭机房的协作版里，走到电网前、穿过电网、站上开关这几步是脚本控制的，因为训练好的策略做不稳。带着搭档、开关和常通电电网重新训练策略，是自然的下一步。</li>
 </ul></section>
 <section><h2 id="复现">复现<a class="anchor" href="#复现"><span class="anchor-icon" data-pagefind-ignore="">#</span></a></h2><div class="expressive-code"><figure class="frame is-terminal"><figcaption class="header"><span class="title"></span><span class="sr-only">Terminal window</span></figcaption><pre data-language="bash" class="wrap" style="--ecMaxLine:129ch"><code><div class="ec-line"><div class="gutter"><div class="ln" aria-hidden="true">1</div></div><div class="code"><span style="--0:#B392F0;--1:#B392F0">mlagents-learn</span><span style="--0:#E1E4E8;--1:#E1E4E8"> </span><span style="--0:#9ECBFF;--1:#9ECBFF">training/rescuebot_ppo.yaml</span><span style="--0:#E1E4E8;--1:#E1E4E8"> </span><span style="--0:#79B8FF;--1:#79B8FF">--env=Build/Train/TeamRescueTrain.exe</span><span style="--0:#E1E4E8;--1:#E1E4E8"> </span><span style="--0:#79B8FF;--1:#79B8FF">--run-id=rescuebot_v3</span><span style="--0:#E1E4E8;--1:#E1E4E8"> </span><span style="--0:#79B8FF;--1:#79B8FF">--num-envs=4</span><span style="--0:#E1E4E8;--1:#E1E4E8"> </span><span style="--0:#79B8FF;--1:#79B8FF">--no-graphics</span></div></div></code><button class="copy-btn" aria-label="Copy code"><div class="copy-btn-icon"><svg viewBox="0 -960 960 960" xmlns="http://www.w3.org/2000/svg" class="copy-btn-icon copy-icon"><path d="M368.37-237.37q-34.48 0-58.74-24.26-24.26-24.26-24.26-58.74v-474.26q0-34.48 24.26-58.74 24.26-24.26 58.74-24.26h378.26q34.48 0 58.74 24.26 24.26 24.26 24.26 58.74v474.26q0 34.48-24.26 58.74-24.26 24.26-58.74 24.26H368.37Zm0-83h378.26v-474.26H368.37v474.26Zm-155 238q-34.48 0-58.74-24.26-24.26-24.26-24.26-58.74v-515.76q0-17.45 11.96-29.48 11.97-12.02 29.33-12.02t29.54 12.02q12.17 12.03 12.17 29.48v515.76h419.76q17.45 0 29.48 11.96 12.02 11.97 12.02 29.33t-12.02 29.54q-12.03 12.17-29.48 12.17H213.37Zm155-238v-474.26 474.26Z"></path></svg><svg viewBox="0 -960 960 960" xmlns="http://www.w3.org/2000/svg" class="copy-btn-icon success-icon"><path d="m389-377.13 294.7-294.7q12.58-12.67 29.52-12.67 16.93 0 29.61 12.67 12.67 12.68 12.67 29.53 0 16.86-12.28 29.14L419.07-288.41q-12.59 12.67-29.52 12.67-16.94 0-29.62-12.67L217.41-430.93q-12.67-12.68-12.79-29.45-.12-16.77 12.55-29.45 12.68-12.67 29.62-12.67 16.93 0 29.28 12.67L389-377.13Z"></path></svg></div></button></pre></figure></div><div class="expressive-code"><figure class="frame is-terminal"><figcaption class="header"><span class="title"></span><span class="sr-only">Terminal window</span></figcaption><pre data-language="bash" class="wrap" style="--ecMaxLine:168ch"><code><div class="ec-line"><div class="gutter"><div class="ln" aria-hidden="true">1</div></div><div class="code"><span style="--0:#B392F0;--1:#B392F0">mlagents-learn</span><span style="--0:#E1E4E8;--1:#E1E4E8"> </span><span style="--0:#9ECBFF;--1:#9ECBFF">training/rescuebot_finetune.yaml</span><span style="--0:#E1E4E8;--1:#E1E4E8"> </span><span style="--0:#79B8FF;--1:#79B8FF">--env=Build/Train/TeamRescueTrain.exe</span><span style="--0:#E1E4E8;--1:#E1E4E8"> </span><span style="--0:#79B8FF;--1:#79B8FF">--run-id=rescuebot_v3_ft</span><span style="--0:#E1E4E8;--1:#E1E4E8"> </span><span style="--0:#79B8FF;--1:#79B8FF">--initialize-from=rescuebot_v3</span><span style="--0:#E1E4E8;--1:#E1E4E8"> </span><span style="--0:#79B8FF;--1:#79B8FF">--num-envs=4</span><span style="--0:#E1E4E8;--1:#E1E4E8"> </span><span style="--0:#79B8FF;--1:#79B8FF">--no-graphics</span></div></div></code><button class="copy-btn" aria-label="Copy code"><div class="copy-btn-icon"><svg viewBox="0 -960 960 960" xmlns="http://www.w3.org/2000/svg" class="copy-btn-icon copy-icon"><path d="M368.37-237.37q-34.48 0-58.74-24.26-24.26-24.26-24.26-58.74v-474.26q0-34.48 24.26-58.74 24.26-24.26 58.74-24.26h378.26q34.48 0 58.74 24.26 24.26 24.26 24.26 58.74v474.26q0 34.48-24.26 58.74-24.26 24.26-58.74 24.26H368.37Zm0-83h378.26v-474.26H368.37v474.26Zm-155 238q-34.48 0-58.74-24.26-24.26-24.26-24.26-58.74v-515.76q0-17.45 11.96-29.48 11.97-12.02 29.33-12.02t29.54 12.02q12.17 12.03 12.17 29.48v515.76h419.76q17.45 0 29.48 11.96 12.02 11.97 12.02 29.33t-12.02 29.54q-12.03 12.17-29.48 12.17H213.37Zm155-238v-474.26 474.26Z"></path></svg><svg viewBox="0 -960 960 960" xmlns="http://www.w3.org/2000/svg" class="copy-btn-icon success-icon"><path d="m389-377.13 294.7-294.7q12.58-12.67 29.52-12.67 16.93 0 29.61 12.67 12.67 12.68 12.67 29.53 0 16.86-12.28 29.14L419.07-288.41q-12.59 12.67-29.52 12.67-16.94 0-29.62-12.67L217.41-430.93q-12.67-12.68-12.79-29.45-.12-16.77 12.55-29.45 12.68-12.67 29.62-12.67 16.93 0 29.28 12.67L389-377.13Z"></path></svg></div></button></pre></figure></div><p>评估：<code>TeamRescueDemo.exe -eval 300 eval.json</code>（加 <code>-baseline</code> 为写死规则）。语言测试：<code>TeamRescueDemo.exe -evalnlu nlu_tests.json out.json</code>（加 <code>-rules</code> 为关键词对照）。游玩：先启动 <code>ollama serve</code> 并拉取 <code>qwen2.5:3b</code>，再运行 <code>TeamRescueDemo.exe</code>，输入指令按回车（1 / 2 / R 仍可用）。协作版：运行 <code>TeamRescueCoop.exe</code>（F1 / F2 / F3 切换队友，N 新回合）；模拟对比：<code>TeamRescueCoop.exe -coopsim 150 out.csv -mode adaptive</code>；真人测试：<code>study\Run-Study.cmd</code>。</p></section> </div> <script type="module">document.addEventListener("click",function(s){const t=s.target;if(t&&t.classList.contains("copy-btn")){const c=t.closest("pre")?.querySelector("code"),i=Array.from(c?.querySelectorAll(".code:not(summary *)")??[]).map(e=>e.textContent).map(e=>e===`
 `?"":e).join(`
