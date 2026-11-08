@@ -1,0 +1,271 @@
+<!DOCTYPE html><html lang="zh-CN" class="bg-[var(--page-bg)] transition text-[14px] md:text-[16px]" data-overlayscrollbars-initialize data-astro-cid-sckkx6r4 style="--bannerOffset: 5vh;--banner-height-home: 40vh;--banner-height: 30vh;--configHue: 165;--page-width: 75rem;"> <head><title>Lab 3 · 用 Unity ML-Agents 训练救援机器人 - Mingyu Zhang</title><script>
+          try { document.documentElement.dataset.view = localStorage.getItem('portfolio-view') === 'reading' ? 'reading' : 'showcase'; }
+          catch { document.documentElement.dataset.view = 'showcase'; }
+        </script><meta charset="UTF-8"><meta name="description" content="在 Unity 6 中训练一个听指令的 PPO 智能体：拿人要求的电芯、躲开放电电缆、恢复供电；完整记录每次失败与修正。"><meta name="author" content="Mingyu Zhang"><link rel="canonical" href="https://icey000.github.io/zh/coursework/hci/lab-ml-agent/"><meta property="og:site_name" content="Mingyu Zhang"><meta property="og:url" content="https://icey000.github.io/zh/coursework/hci/lab-ml-agent/"><meta property="og:title" content="Lab 3 · 用 Unity ML-Agents 训练救援机器人 - Mingyu Zhang"><meta property="og:description" content="在 Unity 6 中训练一个听指令的 PPO 智能体：拿人要求的电芯、躲开放电电缆、恢复供电；完整记录每次失败与修正。"><meta property="og:type" content="website"><meta name="twitter:card" content="summary_large_image"><meta property="twitter:url" content="https://icey000.github.io/zh/coursework/hci/lab-ml-agent/"><meta name="twitter:title" content="Lab 3 · 用 Unity ML-Agents 训练救援机器人 - Mingyu Zhang"><meta name="twitter:description" content="在 Unity 6 中训练一个听指令的 PPO 智能体：拿人要求的电芯、躲开放电电缆、恢复供电；完整记录每次失败与修正。"><meta name="viewport" content="width=device-width"><meta name="generator" content="Astro v5.13.10"><link rel="icon" href="/images/monogram.svg" sizes="any"><!-- Set the theme before the page is rendered to avoid a flash --><script>(function(){const DEFAULT_THEME = "auto";
+const LIGHT_MODE = "light";
+const DARK_MODE = "dark";
+const AUTO_MODE = "auto";
+const BANNER_HEIGHT_EXTEND = 10;
+const PAGE_WIDTH = 75;
+const configHue = 165;
+
+			// Load the theme from local storage
+			const theme = localStorage.getItem('theme') || DEFAULT_THEME;
+			switch (theme) {
+				case LIGHT_MODE:
+					document.documentElement.classList.remove('dark');
+					break
+				case DARK_MODE:
+					document.documentElement.classList.add('dark');
+					break
+				case AUTO_MODE:
+					if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+						document.documentElement.classList.add('dark');
+					} else {
+						document.documentElement.classList.remove('dark');
+					}
+			}
+
+			// Load the hue from local storage
+			const hue = localStorage.getItem('hue') || configHue;
+			document.documentElement.style.setProperty('--hue', hue);
+
+			// calculate the --banner-height-extend, which needs to be a multiple of 4 to avoid blurry text
+			let offset = Math.floor(window.innerHeight * (BANNER_HEIGHT_EXTEND / 100));
+			offset = offset - offset % 4;
+			document.documentElement.style.setProperty('--banner-height-extend', `${offset}px`);
+		})();</script><!-- defines global css variables. This will be applied to <html> <body> and some other elements idk why --><link rel="alternate" type="application/rss+xml" title="Mingyu Zhang" href="https://icey000.github.io/rss.xml"><link rel="stylesheet" href="/_astro/Layout.y4KPJ9hc.css">
+<link rel="stylesheet" href="/_astro/Layout.DSulWsr7.css">
+<link rel="stylesheet" href="/_astro/_content_.yU4xBihc.css">
+<link rel="stylesheet" href="/_astro/_content_.BtniRLn_.css">
+<style>#display-setting.svelte-d7tq3k input[type=range]:where(.svelte-d7tq3k){-webkit-appearance:none;height:1.5rem;background-image:var(--color-selection-bar);transition:background-image .15s ease-in-out}#display-setting.svelte-d7tq3k input[type=range]:where(.svelte-d7tq3k)::-webkit-slider-thumb{-webkit-appearance:none;height:1rem;width:.5rem;border-radius:.125rem;background:#ffffffb3;box-shadow:none}#display-setting.svelte-d7tq3k input[type=range]:where(.svelte-d7tq3k)::-webkit-slider-thumb:hover{background:#fffc}#display-setting.svelte-d7tq3k input[type=range]:where(.svelte-d7tq3k)::-webkit-slider-thumb:active{background:#fff9}#display-setting.svelte-d7tq3k input[type=range]:where(.svelte-d7tq3k)::-moz-range-thumb{-webkit-appearance:none;height:1rem;width:.5rem;border-radius:.125rem;border-width:0;background:#ffffffb3;box-shadow:none}#display-setting.svelte-d7tq3k input[type=range]:where(.svelte-d7tq3k)::-moz-range-thumb:hover{background:#fffc}#display-setting.svelte-d7tq3k input[type=range]:where(.svelte-d7tq3k)::-moz-range-thumb:active{background:#fff9}#display-setting.svelte-d7tq3k input[type=range]:where(.svelte-d7tq3k)::-ms-thumb{-webkit-appearance:none;height:1rem;width:.5rem;border-radius:.125rem;background:#ffffffb3;box-shadow:none}#display-setting.svelte-d7tq3k input[type=range]:where(.svelte-d7tq3k)::-ms-thumb:hover{background:#fffc}#display-setting.svelte-d7tq3k input[type=range]:where(.svelte-d7tq3k)::-ms-thumb:active{background:#fff9}
+input.svelte-1wah7ro:focus{outline:0}.search-panel.svelte-1wah7ro{max-height:calc(100vh - 100px);overflow-y:auto}
+</style><script type="module" src="/_astro/page.Z8IJTFqj.js"></script></head> <body class=" min-h-screen transition  enable-banner" data-overlayscrollbars-initialize data-astro-cid-sckkx6r4 style="--bannerOffset: 5vh;--banner-height-home: 40vh;--banner-height: 30vh;--configHue: 165;--page-width: 75rem;"> <div id="config-carrier" data-hue="165"></div>    <div id="top-row" class="z-50 pointer-events-none relative transition-all duration-700 max-w-[var(--page-width)] px-0 md:px-4 mx-auto"> <div id="navbar-wrapper" class="pointer-events-auto sticky top-0 transition-all"> <div id="navbar" class="z-50 onload-animation"> <div class="absolute h-8 left-0 right-0 -top-8 bg-[var(--card-bg)] transition"></div> <!-- used for onload animation --> <div class="card-base !overflow-visible max-w-[var(--page-width)] h-[4.5rem] !rounded-t-none mx-auto flex items-center justify-between px-4"> <a href="/zh/" class="navbar-brand btn-plain scale-animation rounded-lg h-[3.25rem] px-5 font-bold active:scale-95" aria-label="张明宇 — 首页"> <div class="flex flex-row text-[var(--primary)] items-center text-md"> <svg width="1em" height="1em" class="text-[1.75rem] mb-1 mr-2" data-icon="material-symbols:home-outline-rounded">   <symbol id="ai:material-symbols:home-outline-rounded" viewBox="0 0 24 24"><path fill="currentColor" d="M6 19h3v-5q0-.425.288-.712T10 13h4q.425 0 .713.288T15 14v5h3v-9l-6-4.5L6 10zm-2 0v-9q0-.475.213-.9t.587-.7l6-4.5q.525-.4 1.2-.4t1.2.4l6 4.5q.375.275.588.7T20 10v9q0 .825-.588 1.413T18 21h-4q-.425 0-.712-.288T13 20v-5h-2v5q0 .425-.288.713T10 21H6q-.825 0-1.412-.587T4 19m8-6.75"/></symbol><use href="#ai:material-symbols:home-outline-rounded"></use>  </svg> <span class="brand-full">Mingyu Zhang</span><span class="brand-short" aria-hidden="true">M.Z.</span> </div> </a> <div class="hidden xl:flex"> <a aria-label="关于" href="/zh/about/" class="btn-plain scale-animation rounded-lg h-11 font-bold px-3 active:scale-95"> <div class="flex items-center"> 关于  </div> </a><a aria-label="项目" href="/zh/projects/" class="btn-plain scale-animation rounded-lg h-11 font-bold px-3 active:scale-95"> <div class="flex items-center"> 项目  </div> </a><a aria-label="博客" href="/zh/blog/" class="btn-plain scale-animation rounded-lg h-11 font-bold px-3 active:scale-95"> <div class="flex items-center"> 博客  </div> </a><a aria-label="课程" href="/zh/coursework/" class="btn-plain scale-animation rounded-lg h-11 font-bold px-3 active:scale-95"> <div class="flex items-center"> 课程  </div> </a><a aria-label="交互观察" href="/zh/blog/hci-observatory/" class="btn-plain scale-animation rounded-lg h-11 font-bold px-3 active:scale-95"> <div class="flex items-center"> 交互观察  </div> </a> </div> <div class="flex"> <!--<SearchPanel client:load>--> <style>astro-island,astro-slot,astro-static-slot{display:contents}</style><script>(()=>{var e=async t=>{await(await t())()};(self.Astro||(self.Astro={})).only=e;window.dispatchEvent(new Event("astro:only"));})();</script><script>(()=>{var A=Object.defineProperty;var g=(i,o,a)=>o in i?A(i,o,{enumerable:!0,configurable:!0,writable:!0,value:a}):i[o]=a;var d=(i,o,a)=>g(i,typeof o!="symbol"?o+"":o,a);{let i={0:t=>m(t),1:t=>a(t),2:t=>new RegExp(t),3:t=>new Date(t),4:t=>new Map(a(t)),5:t=>new Set(a(t)),6:t=>BigInt(t),7:t=>new URL(t),8:t=>new Uint8Array(t),9:t=>new Uint16Array(t),10:t=>new Uint32Array(t),11:t=>1/0*t},o=t=>{let[l,e]=t;return l in i?i[l](e):void 0},a=t=>t.map(o),m=t=>typeof t!="object"||t===null?t:Object.fromEntries(Object.entries(t).map(([l,e])=>[l,o(e)]));class y extends HTMLElement{constructor(){super(...arguments);d(this,"Component");d(this,"hydrator");d(this,"hydrate",async()=>{var b;if(!this.hydrator||!this.isConnected)return;let e=(b=this.parentElement)==null?void 0:b.closest("astro-island[ssr]");if(e){e.addEventListener("astro:hydrate",this.hydrate,{once:!0});return}let c=this.querySelectorAll("astro-slot"),n={},h=this.querySelectorAll("template[data-astro-template]");for(let r of h){let s=r.closest(this.tagName);s!=null&&s.isSameNode(this)&&(n[r.getAttribute("data-astro-template")||"default"]=r.innerHTML,r.remove())}for(let r of c){let s=r.closest(this.tagName);s!=null&&s.isSameNode(this)&&(n[r.getAttribute("name")||"default"]=r.innerHTML)}let p;try{p=this.hasAttribute("props")?m(JSON.parse(this.getAttribute("props"))):{}}catch(r){let s=this.getAttribute("component-url")||"<unknown>",v=this.getAttribute("component-export");throw v&&(s+=` (export ${v})`),console.error(`[hydrate] Error parsing props for component ${s}`,this.getAttribute("props"),r),r}let u;await this.hydrator(this)(this.Component,p,n,{client:this.getAttribute("client")}),this.removeAttribute("ssr"),this.dispatchEvent(new CustomEvent("astro:hydrate"))});d(this,"unmount",()=>{this.isConnected||this.dispatchEvent(new CustomEvent("astro:unmount"))})}disconnectedCallback(){document.removeEventListener("astro:after-swap",this.unmount),document.addEventListener("astro:after-swap",this.unmount,{once:!0})}connectedCallback(){if(!this.hasAttribute("await-children")||document.readyState==="interactive"||document.readyState==="complete")this.childrenConnectedCallback();else{let e=()=>{document.removeEventListener("DOMContentLoaded",e),c.disconnect(),this.childrenConnectedCallback()},c=new MutationObserver(()=>{var n;((n=this.lastChild)==null?void 0:n.nodeType)===Node.COMMENT_NODE&&this.lastChild.nodeValue==="astro:end"&&(this.lastChild.remove(),e())});c.observe(this,{childList:!0}),document.addEventListener("DOMContentLoaded",e)}}async childrenConnectedCallback(){let e=this.getAttribute("before-hydration-url");e&&await import(e),this.start()}async start(){let e=JSON.parse(this.getAttribute("opts")),c=this.getAttribute("client");if(Astro[c]===void 0){window.addEventListener(`astro:${c}`,()=>this.start(),{once:!0});return}try{await Astro[c](async()=>{let n=this.getAttribute("renderer-url"),[h,{default:p}]=await Promise.all([import(this.getAttribute("component-url")),n?import(n):()=>()=>{}]),u=this.getAttribute("component-export")||"default";if(!u.includes("."))this.Component=h[u];else{this.Component=h;for(let f of u.split("."))this.Component=this.Component[f]}return this.hydrator=p,this.hydrate},e,this)}catch(n){console.error(`[astro-island] Error hydrating ${this.getAttribute("component-url")}`,n)}}attributeChangedCallback(){this.hydrate()}}d(y,"observedAttributes",["props"]),customElements.get("astro-island")||customElements.define("astro-island",y)}})();</script><astro-island uid="2lMN1b" component-url="/_astro/Search.tTtMougX.js" component-export="default" renderer-url="/_astro/client.svelte.gokUXosY.js" props="{&quot;lang&quot;:[0,&quot;zh_CN&quot;]}" ssr client="only" opts="{&quot;name&quot;:&quot;Search&quot;,&quot;value&quot;:&quot;svelte&quot;}"></astro-island> <nav class="language-switch" aria-label="网站语言" data-pagefind-ignore> <a href="/coursework/hci/" lang="en" hreflang="en" data-no-swup aria-label="Read in English">EN</a> <span aria-hidden="true">/</span> <a href="/zh/coursework/hci/" lang="zh-CN" hreflang="zh-CN" data-no-swup aria-current="true" aria-label="本文暂无中文版，前往中文栏目目录" title="本文暂无中文版，前往中文栏目目录">中文</a> </nav> <script type="module" src="/_astro/LanguageSwitch.astro_astro_type_script_index_0_lang.CNjdByFY.js"></script> <button aria-label="主题颜色设置" class="btn-plain scale-animation rounded-lg h-11 w-11 active:scale-90 hidden sm:flex" id="display-settings-switch"> <svg width="1em" height="1em" class="text-[1.25rem]" data-icon="material-symbols:palette-outline">   <symbol id="ai:material-symbols:palette-outline" viewBox="0 0 24 24"><path fill="currentColor" d="M12 22q-2.05 0-3.875-.788t-3.187-2.15t-2.15-3.187T2 12q0-2.075.813-3.9t2.2-3.175T8.25 2.788T12.2 2q2 0 3.775.688t3.113 1.9t2.125 2.875T22 11.05q0 2.875-1.75 4.413T16 17h-1.85q-.225 0-.312.125t-.088.275q0 .3.375.863t.375 1.287q0 1.25-.687 1.85T12 22m-5.5-9q.65 0 1.075-.425T8 11.5t-.425-1.075T6.5 10t-1.075.425T5 11.5t.425 1.075T6.5 13m3-4q.65 0 1.075-.425T11 7.5t-.425-1.075T9.5 6t-1.075.425T8 7.5t.425 1.075T9.5 9m5 0q.65 0 1.075-.425T16 7.5t-.425-1.075T14.5 6t-1.075.425T13 7.5t.425 1.075T14.5 9m3 4q.65 0 1.075-.425T19 11.5t-.425-1.075T17.5 10t-1.075.425T16 11.5t.425 1.075T17.5 13M12 20q.225 0 .363-.125t.137-.325q0-.35-.375-.825T11.75 17.3q0-1.05.725-1.675T14.25 15H16q1.65 0 2.825-.962T20 11.05q0-3.025-2.312-5.038T12.2 4Q8.8 4 6.4 6.325T4 12q0 3.325 2.338 5.663T12 20"/></symbol><use href="#ai:material-symbols:palette-outline"></use>  </svg> </button> <astro-island uid="Z1WOwll" component-url="/_astro/LightDarkSwitch.BH3c8fUo.js" component-export="default" renderer-url="/_astro/client.svelte.gokUXosY.js" props="{&quot;lang&quot;:[0,&quot;zh_CN&quot;],&quot;label&quot;:[0,&quot;明暗模式&quot;]}" ssr client="only" opts="{&quot;name&quot;:&quot;LightDarkSwitch&quot;,&quot;value&quot;:&quot;svelte&quot;}"></astro-island> <button aria-label="导航菜单" name="Nav Menu" class="btn-plain scale-animation rounded-lg w-11 h-11 active:scale-90 xl:!hidden" id="nav-menu-switch"> <svg width="1em" height="1em" class="text-[1.25rem]" data-icon="material-symbols:menu-rounded">   <symbol id="ai:material-symbols:menu-rounded" viewBox="0 0 24 24"><path fill="currentColor" d="M4 18q-.425 0-.712-.288T3 17t.288-.712T4 16h16q.425 0 .713.288T21 17t-.288.713T20 18zm0-5q-.425 0-.712-.288T3 12t.288-.712T4 11h16q.425 0 .713.288T21 12t-.288.713T20 13zm0-5q-.425 0-.712-.288T3 7t.288-.712T4 6h16q.425 0 .713.288T21 7t-.288.713T20 8z"/></symbol><use href="#ai:material-symbols:menu-rounded"></use>  </svg> </button> </div> <div id="nav-menu-panel" class="float-panel float-panel-closed absolute transition-all fixed right-4 px-2 py-2"> <a href="/zh/about/" class="group flex justify-between items-center py-2 pl-3 pr-1 rounded-lg gap-8
+            hover:bg-[var(--btn-plain-bg-hover)] active:bg-[var(--btn-plain-bg-active)] transition
+        "> <div class="transition text-black/75 dark:text-white/75 font-bold group-hover:text-[var(--primary)] group-active:text-[var(--primary)]"> 关于 </div> <svg width="1em" height="1em" class="transition text-[1.25rem] text-[var(--primary)]" data-icon="material-symbols:chevron-right-rounded">   <symbol id="ai:material-symbols:chevron-right-rounded" viewBox="0 0 24 24"><path fill="currentColor" d="M12.6 12L8.7 8.1q-.275-.275-.275-.7t.275-.7t.7-.275t.7.275l4.6 4.6q.15.15.213.325t.062.375t-.062.375t-.213.325l-4.6 4.6q-.275.275-.7.275t-.7-.275t-.275-.7t.275-.7z"/></symbol><use href="#ai:material-symbols:chevron-right-rounded"></use>  </svg>  </a><a href="/zh/projects/" class="group flex justify-between items-center py-2 pl-3 pr-1 rounded-lg gap-8
+            hover:bg-[var(--btn-plain-bg-hover)] active:bg-[var(--btn-plain-bg-active)] transition
+        "> <div class="transition text-black/75 dark:text-white/75 font-bold group-hover:text-[var(--primary)] group-active:text-[var(--primary)]"> 项目 </div> <svg width="1em" height="1em" viewBox="0 0 24 24" class="transition text-[1.25rem] text-[var(--primary)]" data-icon="material-symbols:chevron-right-rounded">   <use href="#ai:material-symbols:chevron-right-rounded"></use>  </svg>  </a><a href="/zh/blog/" class="group flex justify-between items-center py-2 pl-3 pr-1 rounded-lg gap-8
+            hover:bg-[var(--btn-plain-bg-hover)] active:bg-[var(--btn-plain-bg-active)] transition
+        "> <div class="transition text-black/75 dark:text-white/75 font-bold group-hover:text-[var(--primary)] group-active:text-[var(--primary)]"> 博客 </div> <svg width="1em" height="1em" viewBox="0 0 24 24" class="transition text-[1.25rem] text-[var(--primary)]" data-icon="material-symbols:chevron-right-rounded">   <use href="#ai:material-symbols:chevron-right-rounded"></use>  </svg>  </a><a href="/zh/coursework/" class="group flex justify-between items-center py-2 pl-3 pr-1 rounded-lg gap-8
+            hover:bg-[var(--btn-plain-bg-hover)] active:bg-[var(--btn-plain-bg-active)] transition
+        "> <div class="transition text-black/75 dark:text-white/75 font-bold group-hover:text-[var(--primary)] group-active:text-[var(--primary)]"> 课程 </div> <svg width="1em" height="1em" viewBox="0 0 24 24" class="transition text-[1.25rem] text-[var(--primary)]" data-icon="material-symbols:chevron-right-rounded">   <use href="#ai:material-symbols:chevron-right-rounded"></use>  </svg>  </a><a href="/zh/blog/hci-observatory/" class="group flex justify-between items-center py-2 pl-3 pr-1 rounded-lg gap-8
+            hover:bg-[var(--btn-plain-bg-hover)] active:bg-[var(--btn-plain-bg-active)] transition
+        "> <div class="transition text-black/75 dark:text-white/75 font-bold group-hover:text-[var(--primary)] group-active:text-[var(--primary)]"> 交互观察 </div> <svg width="1em" height="1em" viewBox="0 0 24 24" class="transition text-[1.25rem] text-[var(--primary)]" data-icon="material-symbols:chevron-right-rounded">   <use href="#ai:material-symbols:chevron-right-rounded"></use>  </svg>  </a> </div> <astro-island uid="ZFSfP9" component-url="/_astro/DisplaySettings.Dl_DnYsi.js" component-export="default" renderer-url="/_astro/client.svelte.gokUXosY.js" props="{&quot;lang&quot;:[0,&quot;zh_CN&quot;]}" ssr client="only" opts="{&quot;name&quot;:&quot;DisplaySettings&quot;,&quot;value&quot;:&quot;svelte&quot;}"></astro-island> </div> </div> <script type="module">function l(){let e=document.getElementById("display-settings-switch");e&&(e.onclick=function(){let t=document.getElementById("display-setting");t&&t.classList.toggle("float-panel-closed")});let n=document.getElementById("nav-menu-switch");n&&(n.onclick=function(){let t=document.getElementById("nav-menu-panel");t&&t.classList.toggle("float-panel-closed")})}l();</script> <script>(function(){const scriptUrl = "/pagefind/pagefind.js";
+
+async function loadPagefind() {
+    try {
+        const response = await fetch(scriptUrl, { method: 'HEAD' });
+        if (!response.ok) {
+            throw new Error(`Pagefind script not found: ${response.status}`);
+        }
+
+        const pagefind = await import(scriptUrl);
+
+        await pagefind.options({
+            excerptLength: 20
+        });
+
+        window.pagefind = pagefind;
+
+        document.dispatchEvent(new CustomEvent('pagefindready'));
+        console.log('Pagefind loaded and initialized successfully, event dispatched.');
+    } catch (error) {
+        console.error('Failed to load Pagefind:', error);
+        window.pagefind = {
+            search: () => Promise.resolve({ results: [] }),
+            options: () => Promise.resolve(),
+        };
+        document.dispatchEvent(new CustomEvent('pagefindloaderror'));
+        console.log('Pagefind load error, event dispatched.');
+    }
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', loadPagefind);
+} else {
+    loadPagefind();
+}
+})();</script> <div class="view-toolbar" data-pagefind-ignore> <div class="view-options" role="group" aria-label="页面外观"> <button type="button" data-view-choice="showcase" aria-pressed="true" title="完整版式：图片与侧栏">展示</button> <button type="button" data-view-choice="reading" aria-pressed="false" title="纯文字版式，专心阅读">阅读</button> </div> </div> <script type="module">const c=document.querySelectorAll("[data-view-choice]");function o(e){const t=e==="reading"?"reading":"showcase";document.documentElement.dataset.view=t,c.forEach(a=>a.setAttribute("aria-pressed",String(a.dataset.viewChoice===t)));try{localStorage.setItem("portfolio-view",t)}catch{}window.dispatchEvent(new Event("resize"))}c.forEach(e=>e.addEventListener("click",()=>o(e.dataset.viewChoice||"showcase")));o(document.documentElement.dataset.view||"showcase");</script> </div> </div>  <div id="banner-wrapper" class="absolute z-10 w-full transition duration-700 overflow-hidden" style="top: -10vh"> <div id="banner" class="object-cover h-full transition duration-700 opacity-0 scale-105 overflow-hidden relative"> <div class="transition absolute inset-0 dark:bg-black/10 bg-opacity-50 pointer-events-none"></div>  <img src="/images/landscape.svg" alt="Banner image of the blog" class="w-full h-full object-cover" style="object-position: center"> </div> </div> <div id="main-panel" class="absolute w-full z-30 pointer-events-none" style="top: calc(30vh - 3.5rem)"> <!-- The pointer-events-none here prevent blocking the click event of the TOC --> <div class="relative max-w-[var(--page-width)] mx-auto pointer-events-auto"> <div id="main-grid" class="transition duration-700 w-full left-0 right-0 grid grid-cols-[17.5rem_auto] grid-rows-[auto_1fr_auto] lg:grid-rows-[auto]
+    mx-auto gap-4 px-0 md:px-4"> <!-- Banner image credit -->  <aside id="sidebar" class="mb-4 row-start-2 row-end-3 col-span-2 lg:row-start-1 lg:row-end-2 lg:col-span-1 lg:max-w-[17.5rem] onload-animation w-full"> <section class="card-base profile-card" aria-label="关于张明宇"> <a class="monogram" href="/zh/about/" aria-label="关于张明宇">M<span>z</span><i aria-hidden="true"></i></a> <p class="profile-label">个人学习笔记</p> <a class="profile-name" href="/zh/about/">Mingyu Zhang</a> <p lang="zh-CN" class="profile-chinese">张明宇</p> <p class="profile-bio">课程作业、项目，以及正在学习的新东西。</p> <div class="social-links"><a href="https://github.com/Icey000" rel="me noopener noreferrer" target="_blank"><svg width="0.97em" height="1em" data-icon="fa6-brands:github">   <symbol id="ai:fa6-brands:github" viewBox="0 0 496 512"><path fill="currentColor" d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6c-3.3.3-5.6-1.3-5.6-3.6c0-2 2.3-3.6 5.2-3.6c3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9c2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9c.3 2 2.9 3.3 5.9 2.6c2.9-.7 4.9-2.6 4.6-4.6c-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2c12.8 2.3 17.3-5.6 17.3-12.1c0-6.2-.3-40.4-.3-61.4c0 0-70 15-84.7-29.8c0 0-11.4-29.1-27.8-36.6c0 0-22.9-15.7 1.6-15.4c0 0 24.9 2 38.6 25.8c21.9 38.6 58.6 27.5 72.9 20.9c2.3-16 8.8-27.1 16-33.7c-55.9-6.2-112.3-14.3-112.3-110.5c0-27.5 7.6-41.3 23.6-58.9c-2.6-6.5-11.1-33.3 2.6-67.9c20.9-6.5 69 27 69 27c20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27c13.7 34.7 5.2 61.4 2.6 67.9c16 17.7 25.8 31.5 25.8 58.9c0 96.5-58.9 104.2-114.8 110.5c9.2 7.9 17 22.9 17 46.4c0 33.7-.3 75.4-.3 83.6c0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252C496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2c1.6 1.6 3.9 2.3 5.2 1c1.3-1 1-3.3-.7-5.2c-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9c1.6 1 3.6.7 4.3-.7c.7-1.3-.3-2.9-2.3-3.9c-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2c2.3 2.3 5.2 2.6 6.5 1c1.3-1.3.7-4.3-1.3-6.2c-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2c-1.4-2.3-4-3.3-5.6-2"/></symbol><use href="#ai:fa6-brands:github"></use>  </svg><span>GitHub</span></a><a href="https://www.linkedin.com/in/mingyu-zhang-86a8832bb/" rel="me noopener noreferrer" target="_blank"><svg width="0.88em" height="1em" data-icon="fa6-brands:linkedin">   <symbol id="ai:fa6-brands:linkedin" viewBox="0 0 448 512"><path fill="currentColor" d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3M135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5c0 21.3-17.2 38.5-38.5 38.5m282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7c-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5c67.2 0 79.7 44.3 79.7 101.9z"/></symbol><use href="#ai:fa6-brands:linkedin"></use>  </svg><span>LinkedIn</span></a></div> </section> <div id="sidebar-sticky" class="card-base notebook-nav"> <p class="profile-label">探索我的笔记</p> <a href="/zh/about/"><span>01</span> 关于我 <b>↗</b></a> <a href="/zh/projects/"><span>02</span> 项目 <b>↗</b></a> <a href="/zh/blog/"><span>03</span> 笔记与写作 <b>↗</b></a> <a href="/zh/coursework/"><span>04</span> 课程作业 <b>↗</b></a> <a class="sidebar-observatory" href="/zh/blog/hci-observatory/"><span>↳</span> HCI 交互观察 <b>↗</b></a> <div class="sidebar-note"><span class="status-dot"></span> 正在学习<br><strong>人机交互</strong></div> </div> </aside> <main id="swup-container" class="transition-swup-fade col-span-2 lg:col-span-1 overflow-hidden"> <div id="content-wrapper" class="onload-animation"> <!-- the overflow-hidden here prevent long text break the layout--> <!-- make id different from windows.swup global property --> <nav class="course-tabs card-base" aria-label="HCI 课程导航"> <a href="/zh/coursework/hci/">概览</a><a href="/coursework/hci/hw1/">HW1</a><a href="/coursework/hci/hw2/">HW2</a><a href="/coursework/hci/hw3/">HW3</a><a href="/coursework/hci/hw4/">HW4</a><a href="/coursework/hci/labs/">实验</a><a href="/zh/blog/hci-observatory/">交互观察</a> </nav><article class="card-base article-card"> <header class="article-header"><p class="kicker">HCI</p><h1 data-pagefind-meta="title">Lab 3 · 用 Unity ML-Agents 训练救援机器人</h1><span class="entry-status">学习型策略已训练、可实际游玩 · 成功率 97.3%，触电比写死规则少 78% · 语言指令与真人测试为下一步</span></header> <details class="article-contents"><summary>本文目录</summary><nav aria-label="文章目录"><a href="#作业要求什么我选了什么">作业要求什么，我选了什么#</a><a href="#环境">环境#</a><a href="#智能体设计">智能体设计#</a><a href="#过程四次尝试三个真正的问题">过程：四次尝试，三个真正的问题#</a><a href="#结果">结果#</a><a href="#实际游玩人来下指令">实际游玩：人来下指令#</a><a href="#给后来者的建议">给后来者的建议#</a><a href="#局限与下一步">局限与下一步#</a><a href="#复现">复现#</a></nav></details> <div oai-annotation-container-text data-source-file="src/content/pages/zh-lab-ml-agent.md"> <div data-pagefind-body class="prose dark:prose-invert prose-base !max-w-none custom-md course-article"> <!--<div class="prose dark:prose-invert max-w-none custom-md">--> <!--<div class="max-w-none custom-md">--> <p><strong>2026 年 11 月 8 日实际执行。</strong> 新建 Unity 6 工程，在笔记本 CPU 上用强化学习（PPO，Unity ML-Agents 4.1.0）训练机器人，再把导出的模型放进可运行的 Windows 程序，与写死规则的对照控制器比较。下文所有数字和截图都来自这些实际运行。</p>
+<p><a href="/coursework/hci/lab-ml-agent/">English version →</a> · <a href="/coursework/hci/labs/">全部实验 →</a></p>
+<p><img src="/images/lab3-ml-agent/orange-carrying.png" alt="人改了指令后，训练出的机器人搬着橙色电芯；中间那条发光的是正在放电的电缆"></p>
+<section><h2 id="作业要求什么我选了什么">作业要求什么，我选了什么<a class="anchor" href="#作业要求什么我选了什么"><span class="anchor-icon" data-pagefind-ignore="">#</span></a></h2><p>HCI 讲义第 166 页要求“用 ML agent 做第一个较大的 Unity 应用”，并写过程博客。Roll-a-ball 只是“可以选”的例子之一，不是必须。ML 指机器学习；原文没有要求多智能体，也没有指定算法。</p><p>我不想做“小球学会碰方块”。这是人机交互课，所以把智能体设计成<strong>听人指挥</strong>：</p><blockquote>
+<p>车站停电。人告诉救援机器人<strong>要拿哪种电芯</strong>（蓝色或橙色）。机器人要找到它、不碰错的那颗、穿过<strong>会周期性放电的电缆区</strong>，把电芯送到发电机。</p>
+</blockquote><p>“要哪颗电芯”是策略网络的<strong>输入</strong>（目标条件智能体）。所以同一个训练好的网络，现在可以由人按键指挥，以后可以接自然语言。</p></section>
+<section><h2 id="环境">环境<a class="anchor" href="#环境"><span class="anchor-icon" data-pagefind-ignore="">#</span></a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>项目</th><th>版本／数值</th></tr></thead><tbody><tr><td>引擎</td><td>Unity 6000.6.4f1，URP</td></tr><tr><td>机器学习工具</td><td>Unity 包 <code>com.unity.ml-agents</code> 4.1.0；Python 包 <code>mlagents</code> 1.1.0</td></tr><tr><td>Python</td><td>独立 conda 环境 3.10.12，PyTorch 2.2.2 <strong>CPU 版</strong></td></tr><tr><td>硬件</td><td>AMD Ryzen 7 8845H，核显 Radeon 780M，<strong>没有 CUDA 独显</strong></td></tr><tr><td>训练规模</td><td>4 个无画面游戏进程 × 16 个训练场 = 64 个机器人并行学习</td></tr></tbody></table><p>没有独显也够用：机器人靠数值和射线感知世界，不看摄像头画面，CPU 上每秒约 2000 步。</p></section>
+<section><h2 id="智能体设计">智能体设计<a class="anchor" href="#智能体设计"><span class="anchor-icon" data-pagefind-ignore="">#</span></a></h2><p><strong>它能看到什么（25 个数 + 136 个射线值）</strong></p><ul>
+<li>要求哪种电芯、自己手里拿着什么；</li>
+<li>两颗电芯和发电机相对自己的位置；</li>
+<li>自己的速度、是否被电晕；</li>
+<li>每条电缆的相对位置、方向、<strong>是否在放电</strong>、还有多久切换；</li>
+<li>360° 射线，能分辨墙、电芯、发电机、通电／断电的电缆。</li>
+</ul><p><strong>它能做什么：</strong> 两个连续动作——左右、前后移动。</p><p><strong>奖励设计</strong></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>事件</th><th>奖励</th></tr></thead><tbody><tr><td>把指定电芯送到发电机</td><td>+1.0（本局结束）</td></tr><tr><td>第一次拿到指定电芯</td><td>+0.2</td></tr><tr><td>碰到错误电芯（被拒绝，不会拿起）</td><td>−0.2（每局一次）</td></tr><tr><td>被放电电缆电到（掉落电芯，僵住 1.5 秒）</td><td>−1.0</td></tr><tr><td>离当前目标更近</td><td>每米 +0.1</td></tr><tr><td>时间</td><td>40 秒内总共 −0.5</td></tr></tbody></table><p><strong>课程式训练（curriculum）：</strong> 第一课没有电缆；平均奖励过线后，第二课加一条电缆，第三课再加一条。</p></section>
+<section><h2 id="过程四次尝试三个真正的问题">过程：四次尝试，三个真正的问题<a class="anchor" href="#过程四次尝试三个真正的问题"><span class="anchor-icon" data-pagefind-ignore="">#</span></a></h2><section><h3 id="工具链问题几分钟解决但值得记下来">工具链问题（几分钟解决，但值得记下来）<a class="anchor" href="#工具链问题几分钟解决但值得记下来"><span class="anchor-icon" data-pagefind-ignore="">#</span></a></h3><ol>
+<li><strong>批处理模式报“No valid Unity Editor license found”。</strong> 许可证客户端需要 Unity Hub 提供的登录令牌，当时 Hub 没开；启动 Hub 后正常。</li>
+<li><strong><code>ModuleNotFoundError: pkg_resources</code>。</strong> <code>mlagents</code> 1.1.0 仍依赖 <code>pkg_resources</code>，新版 <code>setuptools</code> 已删掉它；装 <code>setuptools&#x3C;70</code> 解决。</li>
+<li><strong><code>The option ﻿behaviors … is invalid</code>。</strong> PowerShell 的 <code>Set-Content -Encoding utf8</code> 在 YAML 开头写了 BOM；改成无 BOM 的 UTF-8 解决。</li>
+</ol></section><section><h3 id="v1成功率卡在-8">v1：成功率卡在 8%<a class="anchor" href="#v1成功率卡在-8"><span class="anchor-icon" data-pagefind-ignore="">#</span></a></h3><p>训练 40 万步后只有约 8% 的局成功。统计显示装错和装对一样多：机器人一旦拿错电芯就放不下，后面整局都是死路，什么也学不到。<strong>修正：</strong> 碰到错的电芯直接拒绝并扣分；“靠近目标”的奖励加强为原来 5 倍。</p></section><section><h3 id="v2成功率-97却根本没学会躲电缆">v2：成功率 97%，却根本没学会躲电缆<a class="anchor" href="#v2成功率-97却根本没学会躲电缆"><span class="anchor-icon" data-pagefind-ignore="">#</span></a></h3><p>v2 学得很快。随后我把导出的模型跑 200 局，和一个<strong>写死规则的对照控制器</strong>（直线冲向目标，不管电缆）比较：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>v2 评估（2 条电缆）</th><th>成功率</th><th>平均用时</th><th>每局触电</th></tr></thead><tbody><tr><td>训练出的 PPO（v2）</td><td>97.5%</td><td>6.0 秒</td><td>1.00 次</td></tr><tr><td>写死规则直线冲</td><td>99.5%</td><td>4.0 秒</td><td>1.13 次</td></tr></tbody></table><p>学出来的策略和完全不管电缆的控制器触电一样多。原因：触电只扣 0.3 分、僵 1 秒，硬闯比绕路划算；而且机器人根本不知道电缆<strong>什么时候</strong>通电。没有这个对照，我只会写“成功率 97%”，完全发现不了问题。</p><p><strong>修正（v3）：</strong> 触电扣 1.0 分、僵住 1.5 秒；把每条电缆的位置、方向、通电状态、切换倒计时加入观察。</p></section><section><h3 id="v3学会躲开放电电缆">v3：学会躲开放电电缆<a class="anchor" href="#v3学会躲开放电电缆"><span class="anchor-icon" data-pagefind-ignore="">#</span></a></h3><p><img src="/images/lab3-ml-agent/training-curves.png" alt="v3 训练过程中的成功率与每局触电次数，标出三课的切换点"></p><p>曲线能看出课程训练的过程：第一条电缆出现时（104 万步），触电一度飙到每局约 6 次、成功率下跌，之后机器人学会安全穿过。400 万步共训练 36 分钟。</p><p>在程序里评估，v3 触电远少于对照（每局 0.42 次 vs 1.51 次），但成功率只有 92%：8% 的局在电缆旁犹豫到超时。它在“两条电缆”的完整任务上只练了 240 万步。</p></section><section><h3 id="v3-微调最终模型">v3 微调：最终模型<a class="anchor" href="#v3-微调最终模型"><span class="anchor-icon" data-pagefind-ignore="">#</span></a></h3><p>从 v3 的权重继续，只在两条电缆的完整任务上再训练 200 万步，学习率降到 1.5e-4，探索程度降低（熵系数 3e-3）。用时 18 分钟，大部分超时消失了。</p></section></section>
+<section><h2 id="结果">结果<a class="anchor" href="#结果"><span class="anchor-icon" data-pagefind-ignore="">#</span></a></h2><p>评估是在 Windows 程序里运行导出的 ONNX 模型（不是训练时的统计），随机 300 种布局，两条电缆都在。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>策略</th><th>成功率</th><th>成功时平均用时</th><th>每局触电</th><th>碰到错电芯</th></tr></thead><tbody><tr><td><strong>训练出的 PPO（v3 微调，最终版）</strong></td><td><strong>97.3%</strong></td><td>6.2 秒</td><td><strong>0.33 次</strong></td><td>12.7%</td></tr><tr><td>训练出的 PPO（v3）</td><td>92.0%</td><td>7.4 秒</td><td>0.42 次</td><td>12.7%</td></tr><tr><td>写死规则直线冲</td><td>97.3%</td><td>4.3 秒</td><td>1.51 次</td><td>3.3%</td></tr></tbody></table><p><strong>最终的学习型机器人成功率与写死规则持平，触电次数少 78%。</strong> 代价是慢约 2 秒：等电缆断电再过需要时间。它碰到错误电芯也更多（12.7%），因为奖励只教它躲电缆，没有教它远离另一颗电芯。</p></section>
+<section><h2 id="实际游玩人来下指令">实际游玩：人来下指令<a class="anchor" href="#实际游玩人来下指令"><span class="anchor-icon" data-pagefind-ignore="">#</span></a></h2><p>游玩版中，人随时按 <strong>1</strong>（蓝）或 <strong>2</strong>（橙）。如果手里的电芯不再符合指令，机器人会放下并立刻改道——同一个训练好的网络，现在接受人的指挥。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th></th><th></th></tr></thead><tbody><tr><td><img src="/images/lab3-ml-agent/shocked.png" alt="机器人碰到放电电缆后被电晕"></td><td><img src="/images/lab3-ml-agent/command-switch.png" alt="人把指令改成橙色，机器人转向橙色电芯"></td></tr><tr><td>触电：僵住 1.5 秒。</td><td>中途改成橙色：机器人重新规划路线。</td></tr></tbody></table><p><img src="/images/lab3-ml-agent/power-restored.png" alt="发电机变绿：恢复供电"></p><p>送达：发电机变绿，然后进入新的随机布局。（这张来自微调前的 v3 模型，其余截图都是最终模型。）</p><p>画面刻意用简单几何体加上 URP 辉光和应急灯光；精力主要放在学习问题本身。</p></section>
+<section><h2 id="给后来者的建议">给后来者的建议<a class="anchor" href="#给后来者的建议"><span class="anchor-icon" data-pagefind-ignore="">#</span></a></h2><ul>
+<li><strong>一定要和“笨办法”对照评估。</strong> 我最重要的发现（v2 不躲电缆）在训练曲线里完全看不出来。</li>
+<li><strong>学习停滞时，找“死路状态”。</strong> 一个不可挽回的错误，会浪费大部分训练数据。</li>
+<li><strong>给智能体做好决策所需的信息。</strong> 它感知不到的时机，就没法掐准。</li>
+<li><strong>惩罚必须大于捷径的收益。</strong> 只要钻空子更划算，PPO 一定会找到。</li>
+<li><strong>向量／射线观察不需要独显。</strong> 改为并行跑多个无画面进程。</li>
+</ul></section>
+<section><h2 id="局限与下一步">局限与下一步<a class="anchor" href="#局限与下一步"><span class="anchor-icon" data-pagefind-ignore="">#</span></a></h2><ul>
+<li>每个策略只用一个随机种子、300 种布局评估；还没有用不同种子重复训练，所以数字代表一次训练，不是分布。</li>
+<li>目前指令靠按键。下一步：接<strong>自然语言层</strong>，让语言模型把“去拿蓝色电池”转成策略已经理解的目标。</li>
+<li>再下一步：<strong>人机协作</strong>——需要两人配合的任务（一人按住开关、另一人通过），并做小规模<strong>真人测试</strong>，比较写死规则的队友和学习型队友。</li>
+</ul></section>
+<section><h2 id="复现">复现<a class="anchor" href="#复现"><span class="anchor-icon" data-pagefind-ignore="">#</span></a></h2><div class="expressive-code"><link rel="stylesheet" href="/_astro/ec.4fsv9.css"><script type="module" src="/_astro/ec.g1fg5.js"></script><figure class="frame is-terminal"><figcaption class="header"><span class="title"></span><span class="sr-only">Terminal window</span></figcaption><pre data-language="bash" class="wrap" style="--ecMaxLine:129ch"><code><div class="ec-line"><div class="gutter"><div class="ln" aria-hidden="true">1</div></div><div class="code"><span style="--0:#B392F0;--1:#B392F0">mlagents-learn</span><span style="--0:#E1E4E8;--1:#E1E4E8"> </span><span style="--0:#9ECBFF;--1:#9ECBFF">training/rescuebot_ppo.yaml</span><span style="--0:#E1E4E8;--1:#E1E4E8"> </span><span style="--0:#79B8FF;--1:#79B8FF">--env=Build/Train/TeamRescueTrain.exe</span><span style="--0:#E1E4E8;--1:#E1E4E8"> </span><span style="--0:#79B8FF;--1:#79B8FF">--run-id=rescuebot_v3</span><span style="--0:#E1E4E8;--1:#E1E4E8"> </span><span style="--0:#79B8FF;--1:#79B8FF">--num-envs=4</span><span style="--0:#E1E4E8;--1:#E1E4E8"> </span><span style="--0:#79B8FF;--1:#79B8FF">--no-graphics</span></div></div></code><button class="copy-btn" aria-label="Copy code"><div class="copy-btn-icon"><svg viewBox="0 -960 960 960" xmlns="http://www.w3.org/2000/svg" class="copy-btn-icon copy-icon"><path d="M368.37-237.37q-34.48 0-58.74-24.26-24.26-24.26-24.26-58.74v-474.26q0-34.48 24.26-58.74 24.26-24.26 58.74-24.26h378.26q34.48 0 58.74 24.26 24.26 24.26 24.26 58.74v474.26q0 34.48-24.26 58.74-24.26 24.26-58.74 24.26H368.37Zm0-83h378.26v-474.26H368.37v474.26Zm-155 238q-34.48 0-58.74-24.26-24.26-24.26-24.26-58.74v-515.76q0-17.45 11.96-29.48 11.97-12.02 29.33-12.02t29.54 12.02q12.17 12.03 12.17 29.48v515.76h419.76q17.45 0 29.48 11.96 12.02 11.97 12.02 29.33t-12.02 29.54q-12.03 12.17-29.48 12.17H213.37Zm155-238v-474.26 474.26Z"></path></svg><svg viewBox="0 -960 960 960" xmlns="http://www.w3.org/2000/svg" class="copy-btn-icon success-icon"><path d="m389-377.13 294.7-294.7q12.58-12.67 29.52-12.67 16.93 0 29.61 12.67 12.67 12.68 12.67 29.53 0 16.86-12.28 29.14L419.07-288.41q-12.59 12.67-29.52 12.67-16.94 0-29.62-12.67L217.41-430.93q-12.67-12.68-12.79-29.45-.12-16.77 12.55-29.45 12.68-12.67 29.62-12.67 16.93 0 29.28 12.67L389-377.13Z"></path></svg></div></button></pre></figure></div><div class="expressive-code"><figure class="frame is-terminal"><figcaption class="header"><span class="title"></span><span class="sr-only">Terminal window</span></figcaption><pre data-language="bash" class="wrap" style="--ecMaxLine:168ch"><code><div class="ec-line"><div class="gutter"><div class="ln" aria-hidden="true">1</div></div><div class="code"><span style="--0:#B392F0;--1:#B392F0">mlagents-learn</span><span style="--0:#E1E4E8;--1:#E1E4E8"> </span><span style="--0:#9ECBFF;--1:#9ECBFF">training/rescuebot_finetune.yaml</span><span style="--0:#E1E4E8;--1:#E1E4E8"> </span><span style="--0:#79B8FF;--1:#79B8FF">--env=Build/Train/TeamRescueTrain.exe</span><span style="--0:#E1E4E8;--1:#E1E4E8"> </span><span style="--0:#79B8FF;--1:#79B8FF">--run-id=rescuebot_v3_ft</span><span style="--0:#E1E4E8;--1:#E1E4E8"> </span><span style="--0:#79B8FF;--1:#79B8FF">--initialize-from=rescuebot_v3</span><span style="--0:#E1E4E8;--1:#E1E4E8"> </span><span style="--0:#79B8FF;--1:#79B8FF">--num-envs=4</span><span style="--0:#E1E4E8;--1:#E1E4E8"> </span><span style="--0:#79B8FF;--1:#79B8FF">--no-graphics</span></div></div></code><button class="copy-btn" aria-label="Copy code"><div class="copy-btn-icon"><svg viewBox="0 -960 960 960" xmlns="http://www.w3.org/2000/svg" class="copy-btn-icon copy-icon"><path d="M368.37-237.37q-34.48 0-58.74-24.26-24.26-24.26-24.26-58.74v-474.26q0-34.48 24.26-58.74 24.26-24.26 58.74-24.26h378.26q34.48 0 58.74 24.26 24.26 24.26 24.26 58.74v474.26q0 34.48-24.26 58.74-24.26 24.26-58.74 24.26H368.37Zm0-83h378.26v-474.26H368.37v474.26Zm-155 238q-34.48 0-58.74-24.26-24.26-24.26-24.26-58.74v-515.76q0-17.45 11.96-29.48 11.97-12.02 29.33-12.02t29.54 12.02q12.17 12.03 12.17 29.48v515.76h419.76q17.45 0 29.48 11.96 12.02 11.97 12.02 29.33t-12.02 29.54q-12.03 12.17-29.48 12.17H213.37Zm155-238v-474.26 474.26Z"></path></svg><svg viewBox="0 -960 960 960" xmlns="http://www.w3.org/2000/svg" class="copy-btn-icon success-icon"><path d="m389-377.13 294.7-294.7q12.58-12.67 29.52-12.67 16.93 0 29.61 12.67 12.67 12.68 12.67 29.53 0 16.86-12.28 29.14L419.07-288.41q-12.59 12.67-29.52 12.67-16.94 0-29.62-12.67L217.41-430.93q-12.67-12.68-12.79-29.45-.12-16.77 12.55-29.45 12.68-12.67 29.62-12.67 16.93 0 29.28 12.67L389-377.13Z"></path></svg></div></button></pre></figure></div><p>评估：<code>TeamRescueDemo.exe -eval 300 eval.json</code>（加 <code>-baseline</code> 为写死规则）。游玩：运行 <code>TeamRescueDemo.exe</code>，按 1 / 2 / R。</p></section> </div> <script type="module">document.addEventListener("click",function(s){const t=s.target;if(t&&t.classList.contains("copy-btn")){const c=t.closest("pre")?.querySelector("code"),i=Array.from(c?.querySelectorAll(".code:not(summary *)")??[]).map(e=>e.textContent).map(e=>e===`
+`?"":e).join(`
+`);navigator.clipboard.writeText(i);const o=t.getAttribute("data-timeout-id");o&&clearTimeout(parseInt(o)),t.classList.add("success");const n=setTimeout(()=>{t.classList.remove("success")},1e3);t.setAttribute("data-timeout-id",n.toString())}});</script> </div> <div class="article-end"><span>← <a href="/zh/coursework/">课程目录</a></span><a href="#">回到顶部 ↑</a></div> </article>  <div class="footer col-span-2 onload-animation hidden lg:block"> <!--<div class="border-t border-[var(&#45;&#45;primary)] mx-16 border-dashed py-8 max-w-[var(&#45;&#45;page-width)] flex flex-col items-center justify-center px-6">--><div class="transition border-t border-black/10 dark:border-white/15 my-10 border-dashed mx-32"></div> <!--<div class="transition bg-[oklch(92%_0.01_var(&#45;&#45;hue))] dark:bg-black rounded-2xl py-8 mt-4 mb-8 flex flex-col items-center justify-center px-6">--> <div class="transition border-dashed border-[oklch(85%_0.01_var(--hue))] dark:border-white/15 rounded-2xl mb-12 flex flex-col items-center justify-center px-6"> <div class="transition text-50 text-sm text-center">
+&copy; <span id="copyright-year">2026</span> Mingyu Zhang. 保留所有权利。 /
+<a class="transition link text-[var(--primary)] font-medium" target="_blank" href="/rss.xml">RSS</a> /
+<a class="transition link text-[var(--primary)] font-medium" target="_blank" href="/sitemap-index.xml">站点地图</a><br> <a class="site-version" href="/zh/updates/">v0.5 · 网站更新记录</a><br> 使用 <a class="transition link text-[var(--primary)] font-medium" target="_blank" href="https://astro.build">Astro</a> &
+<a class="transition link text-[var(--primary)] font-medium" target="_blank" href="https://github.com/saicaca/fuwari">Fuwari</a> </div> </div> </div> </div> </main> <div class="footer col-span-2 onload-animation block lg:hidden"> <!--<div class="border-t border-[var(&#45;&#45;primary)] mx-16 border-dashed py-8 max-w-[var(&#45;&#45;page-width)] flex flex-col items-center justify-center px-6">--><div class="transition border-t border-black/10 dark:border-white/15 my-10 border-dashed mx-32"></div> <!--<div class="transition bg-[oklch(92%_0.01_var(&#45;&#45;hue))] dark:bg-black rounded-2xl py-8 mt-4 mb-8 flex flex-col items-center justify-center px-6">--> <div class="transition border-dashed border-[oklch(85%_0.01_var(--hue))] dark:border-white/15 rounded-2xl mb-12 flex flex-col items-center justify-center px-6"> <div class="transition text-50 text-sm text-center">
+&copy; <span id="copyright-year">2026</span> Mingyu Zhang. 保留所有权利。 /
+<a class="transition link text-[var(--primary)] font-medium" target="_blank" href="/rss.xml">RSS</a> /
+<a class="transition link text-[var(--primary)] font-medium" target="_blank" href="/sitemap-index.xml">站点地图</a><br> <a class="site-version" href="/zh/updates/">v0.5 · 网站更新记录</a><br> 使用 <a class="transition link text-[var(--primary)] font-medium" target="_blank" href="https://astro.build">Astro</a> &
+<a class="transition link text-[var(--primary)] font-medium" target="_blank" href="https://github.com/saicaca/fuwari">Fuwari</a> </div> </div> </div> </div> <!-- There can't be a filter on parent element, or it will break `fixed` --><div class="back-to-top-wrapper hidden lg:block" data-astro-cid-eymb5ayk> <div id="back-to-top-btn" class="back-to-top-btn hide flex items-center rounded-2xl overflow-hidden transition" onclick="backToTop()" data-astro-cid-eymb5ayk> <button aria-label="Back to Top" class="btn-card h-[3.75rem] w-[3.75rem]" data-astro-cid-eymb5ayk> <svg width="1em" height="1em" class="mx-auto" data-astro-cid-eymb5ayk="true" data-icon="material-symbols:keyboard-arrow-up-rounded">   <symbol id="ai:material-symbols:keyboard-arrow-up-rounded" viewBox="0 0 24 24"><path fill="currentColor" d="m12 10.8l-3.9 3.9q-.275.275-.7.275t-.7-.275t-.275-.7t.275-.7l4.6-4.6q.3-.3.7-.3t.7.3l4.6 4.6q.275.275.275.7t-.275.7t-.7.275t-.7-.275z"/></symbol><use href="#ai:material-symbols:keyboard-arrow-up-rounded"></use>  </svg> </button> </div> </div>  <script>
+function backToTop() {
+    window.scroll({ top: 0, behavior: 'smooth' });
+}
+</script> </div> </div>  <div class="absolute w-full z-0 hidden 2xl:block"> <div class="relative max-w-[var(--page-width)] mx-auto"> <!-- TOC component --> <div id="toc-wrapper" class="hidden lg:block transition absolute top-0 -right-[var(--toc-width)] w-[var(--toc-width)] items-center toc-hide"> <div id="toc-inner-wrapper" class="fixed top-14 w-[var(--toc-width)] h-[calc(100vh_-_20rem)] overflow-y-scroll overflow-x-hidden hide-scrollbar"> <div id="toc" class="w-full h-full transition-swup-fade "> <div class="h-8 w-full"></div> <script type="module">class l extends HTMLElement{tocEl=null;visibleClass="visible";observer;anchorNavTarget=null;headingIdxMap=new Map;headings=[];sections=[];tocEntries=[];active=[];activeIndicator=null;constructor(){super(),this.observer=new IntersectionObserver(this.markVisibleSection,{threshold:0})}markVisibleSection=t=>{t.forEach(e=>{const i=e.target.children[0]?.getAttribute("id"),s=i?this.headingIdxMap.get(i):void 0;s!=null&&(this.active[s]=e.isIntersecting),e.isIntersecting&&this.anchorNavTarget==e.target.firstChild&&(this.anchorNavTarget=null)}),this.active.includes(!0)||this.fallback(),this.update()};toggleActiveHeading=()=>{let t=this.active.length-1,e=this.active.length-1,i=-1;for(;t>=0&&!this.active[t];)this.tocEntries[t].classList.remove(this.visibleClass),t--;for(;t>=0&&this.active[t];)this.tocEntries[t].classList.add(this.visibleClass),e=Math.min(e,t),i=Math.max(i,t),t--;for(;t>=0;)this.tocEntries[t].classList.remove(this.visibleClass),t--;if(e>i)this.activeIndicator?.setAttribute("style","opacity: 0");else{let s=this.tocEl?.getBoundingClientRect().top||0,n=this.tocEl?.scrollTop||0,o=this.tocEntries[e].getBoundingClientRect().top-s+n,c=this.tocEntries[i].getBoundingClientRect().bottom-s+n;this.activeIndicator?.setAttribute("style",`top: ${o}px; height: ${c-o}px`)}};scrollToActiveHeading=()=>{if(this.anchorNavTarget||!this.tocEl)return;const t=document.querySelectorAll(`#toc .${this.visibleClass}`);if(!t.length)return;const e=t[0],i=t[t.length-1],s=this.tocEl.clientHeight;let n;i.getBoundingClientRect().bottom-e.getBoundingClientRect().top<.9*s?n=e.offsetTop-32:n=i.offsetTop-s*.8,this.tocEl.scrollTo({top:n,left:0,behavior:"smooth"})};update=()=>{requestAnimationFrame(()=>{this.toggleActiveHeading(),this.scrollToActiveHeading()})};fallback=()=>{if(this.sections.length)for(let t=0;t<this.sections.length;t++){let e=this.sections[t].getBoundingClientRect().top,i=this.sections[t].getBoundingClientRect().bottom;if(this.isInRange(e,0,window.innerHeight)||this.isInRange(i,0,window.innerHeight)||e<0&&i>window.innerHeight)this.markActiveHeading(t);else if(e>window.innerHeight)break}};markActiveHeading=t=>{this.active[t]=!0};handleAnchorClick=t=>{const e=t.composedPath().find(i=>i instanceof HTMLAnchorElement);if(e){const i=decodeURIComponent(e.hash?.substring(1)),s=this.headingIdxMap.get(i);s!==void 0?this.anchorNavTarget=this.headings[s]:this.anchorNavTarget=null}};isInRange(t,e,i){return e<t&&t<i}connectedCallback(){const t=document.querySelector(".prose");t?t.addEventListener("animationend",()=>{this.init()},{once:!0}):console.debug("Animation element not found")}init(){if(this.tocEl=document.getElementById("toc-inner-wrapper"),!!this.tocEl&&(this.tocEl.addEventListener("click",this.handleAnchorClick,{capture:!0}),this.activeIndicator=document.getElementById("active-indicator"),this.tocEntries=Array.from(document.querySelectorAll("#toc a[href^='#']")),this.tocEntries.length!==0)){this.sections=new Array(this.tocEntries.length),this.headings=new Array(this.tocEntries.length);for(let t=0;t<this.tocEntries.length;t++){const e=decodeURIComponent(this.tocEntries[t].hash?.substring(1)),i=document.getElementById(e),s=i?.parentElement;i instanceof HTMLElement&&s instanceof HTMLElement&&(this.headings[t]=i,this.sections[t]=s,this.headingIdxMap.set(e,t))}this.active=new Array(this.tocEntries.length).fill(!1),this.sections.forEach(t=>this.observer.observe(t)),this.fallback(),this.update()}}disconnectedCallback(){this.sections.forEach(t=>this.observer.unobserve(t)),this.observer.disconnect(),this.tocEl?.removeEventListener("click",this.handleAnchorClick)}}customElements.get("table-of-contents")||customElements.define("table-of-contents",l);</script> <div class="h-8 w-full"></div> </div> </div> </div> <!-- #toc needs to exist for Swup to work normally -->  </div> </div>  <!-- increase the page height during page transition to prevent the scrolling animation from jumping --> <div id="page-height-extend" class="hidden h-[300vh]" data-astro-cid-sckkx6r4 style="--bannerOffset: 5vh;--banner-height-home: 40vh;--banner-height: 30vh;--configHue: 165;--page-width: 75rem;"></div>  <script type="module" src="/_astro/Layout.astro_astro_type_script_index_0_lang.DAHrxWCB.js"></script> <script type="module" src="/_astro/Layout.astro_astro_type_script_index_1_lang.xBLm4cWk.js"></script></body></html>
