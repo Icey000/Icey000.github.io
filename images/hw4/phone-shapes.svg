@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 300" role="img"><rect width="720" height="300" fill="#f6f4ee"/><g fill="none" stroke="#2b2b2b" stroke-width="3" stroke-linejoin="round" font-family="sans-serif" font-size="15" fill-opacity="1">
+<rect x="40" y="70" width="50" height="150" rx="8"/><rect x="50" y="85" width="30" height="35"/><g stroke-width="2"><path d="M52 135h26M52 150h26M52 165h26M52 180h26M52 195h26"/></g><path d="M75 70v-25" /><text x="20" y="250" stroke="none" fill="#2b2b2b">1990s · keypad bar</text>
+<rect x="150" y="70" width="60" height="70" rx="8"/><rect x="150" y="145" width="60" height="75" rx="8"/><text x="130" y="250" stroke="none" fill="#2b2b2b">1996–2004 · flip</text>
+<rect x="270" y="80" width="70" height="130" rx="8"/><rect x="278" y="90" width="54" height="40"/><path d="M278 145h54M278 160h54M278 175h54M278 190h54" stroke-width="2"/><text x="250" y="250" stroke="none" fill="#2b2b2b">2000s · QWERTY bar</text>
+<rect x="400" y="60" width="72" height="150" rx="12"/><rect x="408" y="78" width="56" height="112"/><text x="385" y="250" stroke="none" fill="#2b2b2b">2007 · touch slab</text>
+<rect x="525" y="50" width="80" height="170" rx="14"/><rect x="530" y="58" width="70" height="154" rx="10"/><text x="505" y="250" stroke="none" fill="#2b2b2b">2010s · bigger, edge-to-edge</text>
+<g><rect x="640" y="90" width="38" height="110" rx="6"/><rect x="684" y="90" width="38" height="110" rx="6" transform="translate(-4 0)"/><text x="625" y="270" stroke="none" fill="#2b2b2b">2019– · foldable</text></g>
+<path d="M30 28h660" stroke-width="2"/><text x="30" y="22" stroke="none" fill="#2b2b2b" font-size="13">Schematic outlines, not to scale: the body shape follows the input method and display size</text>
+</g></svg>
